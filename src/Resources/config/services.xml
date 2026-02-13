@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <!-- Definition service -->
+        <service id="ICTECHOrderList\Core\Content\OrderList\OrderListDefination" public="false">
+            <tag name="shopware.entity.definition" entity="order_list"/>
+        </service>
+        <service id="ICTECHOrderList\Core\Content\OrderProductList\OrderProductListDefination" public="false">
+            <tag name="shopware.entity.definition" entity="order_product_list"/>
+        </service>
+        <!-- Extension Service -->
+        <service id="ICTECHOrderList\Core\Content\Extension\CustomerExtension">
+            <tag name="shopware.entity.extension" />
+        </service>
+        <service id="ICTECHOrderList\Core\Content\Extension\ProductExtension">
+            <tag name="shopware.entity.extension" />
+        </service>
+        <service id="ICTECHOrderList\Core\Content\Extension\OrderListExtension">
+            <tag name="shopware.entity.extension" />
+        </service>
+    </services>
+</container>
