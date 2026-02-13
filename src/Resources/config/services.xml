@@ -3,6 +3,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
+
         <!-- Definition service -->
         <service id="ICTECHOrderList\Core\Content\OrderList\OrderListDefination" public="false">
             <tag name="shopware.entity.definition" entity="order_list"/>
@@ -10,6 +11,7 @@
         <service id="ICTECHOrderList\Core\Content\OrderProductList\OrderProductListDefination" public="false">
             <tag name="shopware.entity.definition" entity="order_product_list"/>
         </service>
+
         <!-- Extension Service -->
         <service id="ICTECHOrderList\Core\Content\Extension\CustomerExtension">
             <tag name="shopware.entity.extension" />
@@ -19,6 +21,18 @@
         </service>
         <service id="ICTECHOrderList\Core\Content\Extension\OrderListExtension">
             <tag name="shopware.entity.extension" />
+        </service>
+
+
+       <!-- Controller -->
+        <service id="ICTECHOrderList\Storefront\Controller\OrderListController" public="true">
+            <!-- <argument id="ICTECHOrderList\Storefront\Page\Account\OrderList\OrderListLoader" type="service" />
+            <argument id="ICTECHOrderList\Storefront\Page\Account\OrderListProductSuggest\OrderListSuggestPageLoader" type="service"/>
+            <argument id="ICTECHOrderList\Core\Checkout\Customer\SalesChannel\OrderListRoute" type="service" />
+            <argument id="product.repository" type="service" /> -->
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
         </service>
     </services>
 </container>

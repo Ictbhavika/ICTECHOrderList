@@ -1,0 +1,11 @@
+{
+    "ictectechOrderList": {
+        "account": {
+            "sidebarLink": "Fast order",
+            "pageTitle": "Fast order",
+            "emptyState": {
+                "title": "No orders list found"
+            }
+        }
+    }
+}

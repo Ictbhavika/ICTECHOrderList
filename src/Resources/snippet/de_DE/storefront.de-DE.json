@@ -1,0 +1,11 @@
+{
+    "ictectechOrderList": {
+        "account": {
+            "sidebarLink": "Bestelliste",
+            "pageTitle": "Bestelliste",
+            "emptyState": {
+                "title": "Keine Bestellungen gefunden"
+            }
+        }
+    }
+}
