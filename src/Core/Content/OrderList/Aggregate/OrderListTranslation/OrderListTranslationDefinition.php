@@ -11,7 +11,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 
 class OrderListTranslationDefinition extends EntityTranslationDefinition
 {
-    public const ENTITY_NAME = 'order_list_translation';
+    public const ENTITY_NAME = 'ictech_order_list_translation';
 
     public function getEntityName(): string
     {

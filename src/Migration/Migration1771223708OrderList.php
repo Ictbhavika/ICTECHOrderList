@@ -20,13 +20,13 @@ class Migration1771223708OrderList extends MigrationStep
     public function update(Connection $connection): void
     {
         $sql = <<<SQL
-CREATE TABLE IF NOT EXISTS `order_list` (
+CREATE TABLE IF NOT EXISTS `ictech_order_list` (
     `id` BINARY(16) NOT NULL,
     `customer_id` BINARY(16) NOT NULL,
     `created_at` DATETIME(3) NOT NULL,
     `updated_at` DATETIME(3) NULL,
     PRIMARY KEY (`id`),
-    CONSTRAINT fk_order_list_customer_id 
+    CONSTRAINT fk_ictech_order_list_customer_id 
         FOREIGN KEY (`customer_id`) 
         REFERENCES `customer` (`id`) 
         ON DELETE CASCADE 
@@ -39,6 +39,6 @@ SQL;
 
     public function updateDestructive(Connection $connection): void
     {
-        // Add destructive update if necessary
+        $connection->executeStatement('DROP TABLE IF EXISTS `order_list`');
     }
 }

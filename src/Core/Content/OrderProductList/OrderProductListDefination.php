@@ -19,7 +19,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\UpdatedAtField;
 
 class OrderProductListDefination extends EntityDefinition
 {
-    public const ENTITY_NAME = 'order_product_list';
+    public const ENTITY_NAME = 'ictech_order_product_list';
 
     public function getEntityName(): string
     {
@@ -40,10 +40,10 @@ class OrderProductListDefination extends EntityDefinition
             (new IdField('id', 'id'))->addFlags(new PrimaryKey(), new Required()),
             (new StringField('name', 'name')),
             (new FkField('product_id', 'productId', ProductDefinition::class))->addFlags(new Required(), new ApiAware()),
-            (new FkField('order_list_id', 'orderListId', OrderListDefination::class))->addFlags(new Required(), new ApiAware()),
+            (new FkField('ictech_order_list_id', 'orderListId', OrderListDefination::class))->addFlags(new Required(), new ApiAware()),
             (new ReferenceVersionField(ProductDefinition::class))->addFlags(new Required(), new ApiAware()),
             (new ManyToOneAssociationField('product', 'product_id', ProductDefinition::class, 'id'))->addFlags(new ApiAware()),
-            (new ManyToOneAssociationField('orderList', 'order_list_id', OrderListDefination::class, 'id'))->addFlags(new ApiAware()),
+            (new ManyToOneAssociationField('orderList', 'ictech_order_list_id', OrderListDefination::class, 'id'))->addFlags(new ApiAware()),
             new CreatedAtField(),
             new UpdatedAtField(),
         ]);

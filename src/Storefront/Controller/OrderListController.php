@@ -6,11 +6,17 @@ use Shopware\Storefront\Controller\StorefrontController;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(defaults: ['_routeScope' => ['storefront']])]
 class OrderListController  extends StorefrontController 
 {
+    public function __construct(
+        private readonly EntityRepository $productRepository
+    ) {
+    }
+
     #[Route(path: '/account/order-list', name: 'frontend.account.order-list.page', options: ['seo' => false], defaults: ['_loginRequired' => true, '_noStore' => true], methods: ['GET', 'POST'])]
     public function index(Request $request, SalesChannelContext $context): Response
     {

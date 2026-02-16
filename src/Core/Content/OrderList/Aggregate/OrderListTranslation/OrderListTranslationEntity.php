@@ -10,8 +10,8 @@ use Shopware\Core\Framework\DataAbstractionLayer\TranslationEntity;
 class OrderListTranslationEntity extends TranslationEntity
 {
     protected ?string $name = null;
-    protected string $orderListId;
-    protected ?OrderListEntity $orderList = null;
+    protected string $ictechOrderListId;
+    protected ?OrderListEntity $ictechOrderList = null;
 
     public function getName(): ?string
     {
@@ -23,23 +23,23 @@ class OrderListTranslationEntity extends TranslationEntity
         $this->name = $name;
     }
 
-    public function getOrderListId(): string
+    public function getIctechOrderListId(): string
     {
-        return $this->orderListId;
+        return $this->ictechOrderListId;
     }
 
-    public function setOrderListId(string $orderListId): void
+    public function setIctechOrderListId(string $ictechOrderListId): void
     {
-        $this->orderListId = $orderListId;
+        $this->ictechOrderListId = $ictechOrderListId;
     }
 
-    public function getOrderList(): ?OrderListEntity
+    public function getIctechOrderList(): ?OrderListEntity
     {
-        return $this->orderList;
+        return $this->ictechOrderList;
     }
 
-    public function setOrderList(?OrderListEntity $orderList): void
+    public function setIctechOrderList(?OrderListEntity $ictechOrderList): void
     {
-        $this->orderList = $orderList;
+        $this->ictechOrderList = $ictechOrderList;
     }
 }

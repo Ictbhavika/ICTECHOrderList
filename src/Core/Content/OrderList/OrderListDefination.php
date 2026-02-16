@@ -19,7 +19,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\UpdatedAtField;
 
 class OrderListDefination extends EntityDefinition
 {
-    public const ENTITY_NAME = 'order_list';
+    public const ENTITY_NAME = 'ictech_order_list';
 
     public function getEntityName(): string
     {
@@ -41,7 +41,7 @@ class OrderListDefination extends EntityDefinition
             (new FkField('customer_id', 'customerId', CustomerDefinition::class))->addFlags(new Required(), new ApiAware()),
             (new ManyToOneAssociationField('customer', 'customer_id', CustomerDefinition::class, 'id', false))->addFlags(new ApiAware()),
             new TranslatedField('name'),
-            (new TranslationsAssociationField(OrderListTranslationDefinition::class, 'order_list_id'))->addFlags(new ApiAware(), new Required()),
+            (new TranslationsAssociationField(OrderListTranslationDefinition::class, 'ictech_order_list_id'))->addFlags(new ApiAware(), new Required()),
             new CreatedAtField(),
             new UpdatedAtField(),
         ]);
