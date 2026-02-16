@@ -1,8 +1,15 @@
 {
     "ictectechOrderList": {
         "account": {
-            "sidebarLink": "Fast order",
-            "pageTitle": "Fast order",
+            "sidebarLink": "Order List",
+            "pageTitle": "Order List",
+            "orderListOverview": "Overview of your order lists",
+            "createOrderListBtn": "Create Order List",
+            "orderlistModelLabel": "Search products, import CSV and quickly add items to your cart.",
+            "orderListName": "Order List Name",
+            "searchProduct": "Search Products",
+            "csvImport": "CSV Import",
+            "searchProductLabel": "Search by name or SKU...",
             "emptyState": {
                 "title": "No orders list found"
             }

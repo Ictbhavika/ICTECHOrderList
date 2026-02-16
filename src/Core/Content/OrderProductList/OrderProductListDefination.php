@@ -14,6 +14,8 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField
 use ICTECHOrderList\Core\Content\OrderList\OrderListDefination;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\ReferenceVersionField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\CreatedAtField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\UpdatedAtField;
 
 class OrderProductListDefination extends EntityDefinition
 {
@@ -40,9 +42,10 @@ class OrderProductListDefination extends EntityDefinition
             (new FkField('product_id', 'productId', ProductDefinition::class))->addFlags(new Required(), new ApiAware()),
             (new FkField('order_list_id', 'orderListId', OrderListDefination::class))->addFlags(new Required(), new ApiAware()),
             (new ReferenceVersionField(ProductDefinition::class))->addFlags(new Required(), new ApiAware()),
-           
             (new ManyToOneAssociationField('product', 'product_id', ProductDefinition::class, 'id'))->addFlags(new ApiAware()),
             (new ManyToOneAssociationField('orderList', 'order_list_id', OrderListDefination::class, 'id'))->addFlags(new ApiAware()),
+            new CreatedAtField(),
+            new UpdatedAtField(),
         ]);
     }
 }

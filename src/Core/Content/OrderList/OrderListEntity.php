@@ -2,44 +2,22 @@
 
 namespace ICTECHOrderList\Core\Content\OrderList;
 
+use ICTECHOrderList\Core\Content\OrderList\Aggregate\OrderListTranslation\OrderListTranslationCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
 use Shopware\Core\Checkout\Customer\CustomerEntity;
-use ICTECHOrderList\Core\Content\OrderProductList\OrderProductListCollection;
 
 class OrderListEntity extends Entity
 {
     use EntityIdTrait;
 
-    /**
-     * @var string
-     */
     protected string $id;
-
-    /**
-     * @var string|null
-     */
-    protected $name;
-
-    /**
-     * @var string
-     */
-    protected $customerId;
-
-    /**
-     * @var CustomerEntity|null
-     */
-    protected $customer;
-
-    /**
-     * @var \DateTimeInterface
-     */
-    protected ?\DateTimeInterface $createdAt;
-
-    /**
-     * @var \DateTimeInterface|null
-     */
-    protected ?\DateTimeInterface $updatedAt;
+    protected ?string $name = null;
+    protected string $customerId;
+    protected ?CustomerEntity $customer = null;
+    protected ?OrderListTranslationCollection $translations = null;
+    protected ?\DateTimeInterface $createdAt = null;
+    protected ?\DateTimeInterface $updatedAt = null;
 
     public function getId(): string
     {
@@ -79,6 +57,16 @@ class OrderListEntity extends Entity
     public function setCustomer(?CustomerEntity $customer): void
     {
         $this->customer = $customer;
+    }
+
+    public function getTranslations(): ?OrderListTranslationCollection
+    {
+        return $this->translations;
+    }
+
+    public function setTranslations(OrderListTranslationCollection $translations): void
+    {
+        $this->translations = $translations;
     }
 
     public function getCreatedAt(): ?\DateTimeInterface

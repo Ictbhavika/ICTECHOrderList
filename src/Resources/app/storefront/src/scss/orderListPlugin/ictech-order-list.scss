@@ -1,0 +1,84 @@
+.orderlist-page {
+    padding-bottom: 90px;
+    .card {
+        border-radius: 14px;
+        border: none;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+        transition: transform .2s ease, box-shadow .2s ease;
+
+        // &:hover {
+        //     transform: translateY(-2px);
+        //     box-shadow: 0 10px 26px rgba(0,0,0,0.08);
+        // }
+    }
+
+    /* Header */
+    label {
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        height: 46px;
+        transition: border .2s ease, box-shadow .2s ease;
+
+        &:focus {
+            border-color: $primary;
+            box-shadow: 0 0 0 0.2rem rgba($primary, .25);
+        }
+    }
+
+    /* Search icon */
+    .search-icon {
+        color: $primary;
+    }
+
+    /* CSV link */
+    .demo-link {
+        color: $primary;
+
+        &:hover {
+            color: darken($primary, 8%);
+        }
+    }
+
+    .orderlist-table {
+        thead {
+            th {
+                font-weight: 600;
+            }
+        }
+        
+    }
+
+    /* Empty State */
+
+    .orderlist-empty {
+        border: 2px dashed rgba($primary, .25);
+        background: rgba($primary, .03);
+
+        .empty-icon {
+            color: $primary;
+        }
+    }
+}
+
+.orderlist-footer {
+    position: sticky;
+    bottom: 0;
+    background: white;
+    padding: 18px 22px;
+    border-top: 1px solid #eee;
+    box-shadow: 0 -4px 18px rgba(0,0,0,0.04);
+
+    .btn-primary {
+        background: $primary;
+        border-color: $primary;
+
+        &:hover {
+            background: darken($primary, 7%);
+            border-color: darken($primary, 7%);
+        }
+    }
+}

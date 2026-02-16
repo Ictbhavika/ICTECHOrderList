@@ -3,6 +3,13 @@
         "account": {
             "sidebarLink": "Bestelliste",
             "pageTitle": "Bestelliste",
+            "orderListOverview": "Übersicht über Ihre Bestellisten",
+            "createOrderListBtn": "Bestelliste erstellen",
+            "orderlistModelLabel": "Produkte suchen, CSV importieren und schnell Artikel zu Ihrem Warenkorb hinzufügen.",
+            "orderListName": "Bestellistenname",
+            "searchProduct": "Produkte suchen",
+            "csvImport": "CSV-Import",
+            "searchProductLabel": "Suchen Sie nach Name oder SKU...",
             "emptyState": {
                 "title": "Keine Bestellungen gefunden"
             }

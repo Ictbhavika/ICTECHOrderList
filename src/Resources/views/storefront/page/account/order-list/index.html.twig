@@ -1,0 +1,93 @@
+{% sw_extends '@Storefront/storefront/page/account/_page.html.twig' %}
+
+{% block base_flashbags %}{% endblock %}
+
+{% block page_account_main_content %}
+
+	{% block page_account_order_list %}
+		<div class="container order-list-page">
+
+			<!-- Header -->
+			<div class="d-flex justify-content-between align-items-center mb-4">
+				<h1 class="h3 mb-0">
+					{{ "ictectechOrderList.account.orderListOverview"|trans|sw_sanitize }}
+				</h1>
+
+				<!-- Create Button -->
+				<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createOrderListModal">
+					{{ "ictectechOrderList.account.createOrderListBtn"|trans|sw_sanitize }}
+				</button>
+			</div>
+
+
+			{# EMPTY STATE #}
+			{% if orderLists.total == 0 %}
+				<div class="text-center py-5">
+					<h4>No order lists yet</h4>
+					<p class="text-muted">Create your first list to save products for later.</p>
+
+					<button class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#createOrderListModal">
+						Create Order List
+					</button>
+				</div>
+			{% else %}
+
+				<!-- GRID -->
+				<div class="row g-4">
+					{% for orderList in orderLists %}
+						<div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+							<div class="card h-100 shadow-sm">
+
+								<div class="card-body d-flex flex-column">
+
+									<h5 class="card-title text-truncate">
+										{{ orderList.name }}
+									</h5>
+
+									<p class="mb-1">
+										<strong>{{ orderList.productCount }}</strong>
+										products
+									</p>
+
+									<small class="text-muted">
+										Created:
+										{{ orderList.createdAt|date("d M Y") }}
+									</small>
+
+									<small class="text-muted mb-3">
+										Updated:
+										{{ orderList.updatedAt|date("d M Y") }}
+									</small>
+
+									<div class="mt-auto">
+										<a href="{{ path('frontend.order-list.detail', {id: orderList.id}) }}" class="btn btn-outline-primary w-100">
+											Open List
+										</a>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+
+
+				<!-- Pagination -->
+				<div class="mt-4 d-flex justify-content-center">
+					{% sw_include '@Storefront/storefront/component/pagination.html.twig' with {
+                entities: orderLists
+            } %}
+				</div>
+
+			{% endif %}
+		</div>
+
+		{% block page_account_order_list_model_product_add %}
+			{% sw_include '@Storefront/storefront/page/account/order-list/order-list-product-model.html.twig' with {
+				} only %}
+		{% endblock %}
+
+
+	</div>
+
+{% endblock %}{% endblock %}

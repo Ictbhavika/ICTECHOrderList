@@ -1,0 +1,135 @@
+{% block page_account_order_list_model_product_model %}
+	<div class="modal fade" id="createOrderListModal" tabindex="-1" aria-labelledby="createOrderListLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl modal-dialog-centered">
+			<div class="modal-content">
+				{% block page_account_order_list_model_product_model_header_form %}
+					<form method="post" action="{{ path('frontend.order-list.create') }}">
+
+						{% block page_account_order_list_model_product_model_header %}
+							<div class="modal-header">
+								<h5 class="modal-title" id="createOrderListLabel">
+									{{ "ictectechOrderList.account.createOrderListBtn"|trans|sw_sanitize }}
+								</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+							</div>
+						{% endblock %}
+
+						{% block page_account_order_list_model_product_model_body %}
+							<div class="modal-body">
+								<div class="container py-4 orderlist-page" data-orderlist="true">
+									<div class="mb-4">
+										<p class="text-muted mb-0">
+										{{ "ictectechOrderList.account.orderlistModelLabel"|trans|sw_sanitize }}
+										</p>
+									</div>
+
+									{% block page_account_order_list_model_product_model_body_content %}
+										<div class="card shadow-sm border-0 mb-4">
+											<div class="card-body">
+												<div class="row g-4">
+													<div class="col-lg-4">
+														<label class="form-label fw-semibold">
+															{{ "ictectechOrderList.account.orderListName"|trans|sw_sanitize }}
+														</label>
+														<input type="text" name="orderListName" class="form-control js-orderlist-name">
+													</div>
+
+													<!-- Product search -->
+													<div class="col-lg-4">
+														<label class="form-label fw-semibold">
+															{{ "ictectechOrderList.account.searchProduct"|trans|sw_sanitize }}
+														</label>
+
+														<div class="input-group">
+															<span class="input-group-text bg-white">
+																{% sw_icon 'search' %}
+															</span>
+															<input type="search" class="form-control js-product-search" placeholder="{{ "ictectechOrderList.account.searchProductLabel"|trans|sw_sanitize }}">
+														</div>
+													</div>
+
+													<!-- CSV IMPORT -->
+													<div class="col-lg-4">
+
+														<label class="form-label fw-semibold">
+															{{ "ictectechOrderList.account.csvImport"|trans|sw_sanitize }}
+														</label>
+
+														<input type="file" class="form-control js-csv-upload" accept=".csv">
+													</div>
+
+												</div>
+
+											</div>
+										</div>
+									{% endblock %}
+
+
+									<!-- PRODUCT LIST -->
+									<div class="card mt-5 shadow-sm border-0">
+										<div class="card-body p-0">
+											<table class="table align-middle mb-0">
+												<thead class="table-light">
+													<tr>
+														<th style="width:50%">Product</th>
+														<th style="width:15%">Qty</th>
+														<th style="width:15%">Price</th>
+														<th style="width:15%">Subtotal</th>
+														<th></th>
+													</tr>
+												</thead>
+
+												<tbody id="orderlist-products">
+
+											
+													<tr class="empty-state">
+														<td colspan="5" class="text-center py-5 text-muted">
+
+															<div class="fw-semibold mb-1">
+																No product added yet
+															</div>
+
+															<small>
+																Search or import products to begin your order.
+															</small>
+
+														</td>
+													</tr>
+
+												</tbody>
+
+											</table>
+
+										</div>
+									</div>
+
+
+									<!-- ADD TO CART BAR -->
+									<div class="orderlist-footer mt-4">
+
+										<div class="d-flex justify-content-between align-items-center">
+
+											<div>
+												<strong>Total:</strong>
+												<span class="fs-5 ms-2 js-order-total">
+													€0.00
+												</span>
+											</div>
+
+											<button class="btn btn-primary btn-lg" data-add-to-cart="true">
+												Add All To Cart
+											</button>
+
+										</div>
+
+									</div>
+
+								</div>
+							</div>
+						{% endblock %}
+					</form>
+				{% endblock %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

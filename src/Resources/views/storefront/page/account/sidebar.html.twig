@@ -7,7 +7,7 @@
         <a href="{{ path('frontend.account.order-list.page') }}"
            title="{{ "ictectechOrderList.account.sidebarLink"|trans|striptags }}"
            class="list-group-item list-group-item-action account-aside-item{% if activeRoute is same as('frontend.account.order-list.page') %} is-active{% endif %}">
-            {{ "ictectechOrderList.account.orderListPage"|trans|sw_sanitize }}
+            {{ "ictectechOrderList.account.pageTitle"|trans|sw_sanitize }}
         </a>
     {% endif %}
     {{ parent() }}
