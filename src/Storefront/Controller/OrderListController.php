@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace ICTECHOrderList\Storefront\Controller;
 
@@ -14,7 +16,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
 use Shopware\Core\Framework\Uuid\Uuid;
 
 #[Route(defaults: ['_routeScope' => ['storefront']])]
-class OrderListController  extends StorefrontController 
+class OrderListController  extends StorefrontController
 {
     public function __construct(
         private readonly EntityRepository $productRepository,
@@ -26,10 +28,24 @@ class OrderListController  extends StorefrontController
     #[Route(path: '/account/order-list', name: 'frontend.account.order-list.page', options: ['seo' => false], defaults: ['_loginRequired' => true, '_noStore' => true], methods: ['GET', 'POST'])]
     public function index(Request $request, SalesChannelContext $context): Response
     {
-        //dd("1");
-       // $page = $this->fastOrderPageLoader->load($request, $context);
-        $page = null;
-        return $this->renderStorefront('@Storefront/storefront/page/account/order-list/index.html.twig', ['page' => $page]);
+        $customerId = $context->getCustomerId();
+
+        $criteria = new Criteria();
+        $criteria->addFilter(new EqualsAnyFilter('customerId', [$customerId]));
+        $criteria->addAssociation('orderListProduct');
+        $criteria->setLimit(12);
+        $criteria->setOffset((int) $request->query->get('p', 1) - 1);
+
+        $orderLists = $this->orderListRepository->search($criteria, $context->getContext());
+
+        // Add product count to each order list
+        foreach ($orderLists as $orderList) {
+            $orderList->productCount = $orderList->getExtension('orderListProduct') ? count($orderList->getExtension('orderListProduct')) : 0;
+        }
+
+        return $this->renderStorefront('@Storefront/storefront/page/account/order-list/index.html.twig', [
+            'orderLists' => $orderLists
+        ]);
     }
 
     #[Route(

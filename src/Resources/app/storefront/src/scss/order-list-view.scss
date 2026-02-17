@@ -1,0 +1,28 @@
+.hover-shadow {
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    }
+}
+
+.view-grid .order-list-item {
+    width: 100%;
+
+    @media (min-width: 576px) {
+        width: 50%;
+    }
+
+    @media (min-width: 992px) {
+        width: 33.333%;
+    }
+
+    @media (min-width: 1200px) {
+        width: 25%;
+    }
+}
+
+.view-list .order-list-item {
+    width: 100%;
+}

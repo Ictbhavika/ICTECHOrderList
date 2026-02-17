@@ -1,0 +1,86 @@
+{% block neti_next_easy_coupon_vouchers_grid_card %}
+    <sw-card
+        :title="title"
+        :is-loading="isLoading"
+        position-identifier="neti-easy-coupon-vouchers-grid"
+    >
+        {% block neti_next_easy_coupon_vouchers_grid_content %}
+            <template #grid>
+                <sw-data-grid
+                    :dataSource="data"
+                    :columns="columns"
+                    :showSelection="false"
+                    :showActions="true"
+                >
+                    <template #column-type="{ item }">
+                        {{ $t('neti-easy-coupon.order-detail.voucher-list.type.' + getVoucherType(item)) }}
+                    </template>
+
+                    <template #column-name="{ item }">
+                        <router-link
+                            v-if="getVoucherIdFromLineItem(item)"
+                            :to="{ name: 'neti.easy_coupon.detail', params: { id: getVoucherIdFromLineItem(item) }, _blank: true }"
+                            target="_blank"
+                        >
+                            {{ item.designTitle || item.label }}
+                        </router-link>
+
+                        <template v-else>
+                            {{ item.designTitle || item.label }}
+                        </template>
+                    </template>
+
+            <template #column-value="{ item }">
+                {{ currencyFilter(getValue(item), order.currency.shortName) }}
+            </template>
+
+                    <template #column-code="{ item }">
+                        <router-link
+                            v-if="getVoucherIdFromLineItem(item)"
+                            :to="{ name: 'neti.easy_coupon.detail', params: { id: getVoucherIdFromLineItem(item) }, _blank: true }"
+                            target="_blank"
+                        >
+                            {{ getCode(item) }}
+                        </router-link>
+
+                        <template v-else>
+                            {{ getCode(item) }}
+                        </template>
+
+                        <span class="unresolved-code" v-if="!getCode(item)">
+                    {{ $t('neti-easy-coupon.order-detail.voucher-list.unresolvedCode') }}
+
+                    <sw-help-text
+                        :text="$t('neti-easy-coupon.order-detail.voucher-list.unresolvedCodeHelpText')"
+                    ></sw-help-text>
+                </span>
+                    </template>
+
+                    <template #column-postal="{ item }">
+                        {{ getPostalValue(item) }}
+                    </template>
+
+                    <template #column-shippingCostReduction="{ item }">
+                        {{ getShippingCostReductionValue(item) }}
+                    </template>
+
+                    {% block neti_next_easy_coupon_vouchers_grid_content_additional_columns %}
+                    {% endblock %}
+
+                    {% block neti_next_easy_coupon_vouchers_grid_content_actions %}
+                        <template #actions="{ item }">
+                            {% block neti_next_easy_coupon_vouchers_grid_content_actions_on_open_voucher %}
+                                <sw-context-menu-item @click="onOpenVoucher(item)" :disabled="!getCode(item)">
+                                    {{ $t('neti-easy-coupon.order-detail.voucher-list.actionOpenVoucher') }}
+                                </sw-context-menu-item>
+                            {% endblock %}
+                        </template>
+                    {% endblock %}
+
+                    {% block neti_next_easy_coupon_vouchers_grid_content_additional_actions %}
+                    {% endblock %}
+                </sw-data-grid>
+            </template>
+        {% endblock %}
+    </sw-card>
+{% endblock %}

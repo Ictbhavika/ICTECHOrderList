@@ -5,72 +5,84 @@
 {% block page_account_main_content %}
 
 	{% block page_account_order_list %}
-		<div class="container order-list-page">
-
+		<div class="order-list-page">
 			<!-- Header -->
-			<div class="d-flex justify-content-between align-items-center mb-4">
-				<h1 class="h3 mb-0">
+			<div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
+				<h1 class="h2 mb-0">
 					{{ "ictectechOrderList.account.orderListOverview"|trans|sw_sanitize }}
 				</h1>
 
-				<!-- Create Button -->
-				<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createOrderListModal">
-					{{ "ictectechOrderList.account.createOrderListBtn"|trans|sw_sanitize }}
-				</button>
+				<div class="d-flex gap-2 flex-grow-1 flex-md-grow-0" style="max-width: 500px;" data-order-list-search>
+					<!-- Search -->
+					<input type="text" class="form-control form-control-sm" placeholder="Search lists..." data-search-input>
+					
+					<!-- View Toggle -->
+					<div class="btn-group" role="group" aria-label="View toggle" data-order-list-view-switcher>
+						<button type="button" class="btn btn-sm btn-outline-secondary" data-view-mode="grid" title="Grid view">
+							<svg width="16" height="16" fill="currentColor"><path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z"/></svg>
+						</button>
+						<button type="button" class="btn btn-sm btn-outline-secondary" data-view-mode="list" title="List view">
+							<svg width="16" height="16" fill="currentColor"><path d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/></svg>
+						</button>
+					</div>
+
+					<!-- Create Button -->
+					<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createOrderListModal">
+						<svg width="16" height="16" fill="currentColor" class="me-1"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg>
+						{{ "ictectechOrderList.account.createOrderListBtn"|trans|sw_sanitize }}
+					</button>
+				</div>
 			</div>
 
 
 			{# EMPTY STATE #}
 			{% if orderLists.total == 0 %}
-				<div class="text-center py-5">
-					<h4>No order lists yet</h4>
-					<p class="text-muted">Create your first list to save products for later.</p>
-
-					<button class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#createOrderListModal">
-						Create Order List
-					</button>
+				<div class="card border-0 shadow-sm">
+					<div class="card-body text-center py-5">
+						<svg width="64" height="64" fill="currentColor" class="text-muted mb-3"><path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/></svg>
+						<h4 class="mb-2 mt-3">{{ "ictectechOrderList.account.emptyState.title"|trans|sw_sanitize }}</h4>
+						<p class="text-muted mb-4">{{ "ictectechOrderList.account.emptyState.description"|trans|sw_sanitize }}</p>
+						<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createOrderListModal">
+							<svg width="16" height="16" fill="currentColor" class="me-1"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg>
+							{{ "ictectechOrderList.account.emptyState.button"|trans|sw_sanitize }}
+						</button>
+					</div>
 				</div>
 			{% else %}
 
 				<!-- GRID -->
-				<div class="row g-4">
+				<div class="row g-3 view-grid" data-order-list-container>
 					{% for orderList in orderLists %}
-						<div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-							<div class="card h-100 shadow-sm">
-
-								<div class="card-body d-flex flex-column">
-
-									<h5 class="card-title text-truncate">
-										{{ orderList.name }}
-									</h5>
-
-									<p class="mb-1">
-										<strong>{{ orderList.productCount }}</strong>
-										products
-									</p>
-
-									<small class="text-muted">
-										Created:
-										{{ orderList.createdAt|date("d M Y") }}
-									</small>
-
-									<small class="text-muted mb-3">
-										Updated:
-										{{ orderList.updatedAt|date("d M Y") }}
-									</small>
-
-									<div class="mt-auto">
-										<a href="{{ path('frontend.order-list.detail', {id: orderList.id}) }}" class="btn btn-outline-primary w-100">
-											Open List
-										</a>
+						<div class="col-12 col-sm-6 col-lg-4 col-xl-3 order-list-item" data-search-item>
+							<div class="card h-100 border-0 shadow-sm hover-shadow transition">
+								<div class="card-body d-flex flex-column p-4">
+									<div class="d-flex justify-content-between align-items-start mb-3">
+										<h5 class="card-title mb-0 text-truncate flex-grow-1 pe-2">
+											{{ orderList.name }}
+										</h5>
+										<span class="badge bg-primary rounded-pill">{{ orderList.productCount }}</span>
 									</div>
 
+									<div class="mb-3 flex-grow-1">
+										<small class="text-muted d-block mb-1">
+											<svg width="12" height="12" fill="currentColor" class="me-1"><path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/></svg>
+											{{ "ictectechOrderList.account.created"|trans|sw_sanitize }} {{ orderList.createdAt|date("d M Y") }}
+										</small>
+										<small class="text-muted d-block">
+											<svg width="12" height="12" fill="currentColor" class="me-1"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/></svg>
+											{{ "ictectechOrderList.account.updated"|trans|sw_sanitize }} {{ orderList.updatedAt|date("d M Y") }}
+										</small>
+									</div>
+
+									<a href="{{ path('frontend.order-list.detail', {id: orderList.id}) }}" class="btn btn-outline-primary w-100">
+										{{ "ictectechOrderList.account.openList"|trans|sw_sanitize }}
+										<svg width="12" height="12" fill="currentColor" class="ms-1"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>
+									</a>
 								</div>
 							</div>
 						</div>
 					{% endfor %}
 				</div>
-
 
 				<!-- Pagination -->
 				<div class="mt-4 d-flex justify-content-center">
