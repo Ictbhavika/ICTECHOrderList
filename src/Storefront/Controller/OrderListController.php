@@ -86,6 +86,28 @@ class OrderListController  extends StorefrontController
             ], Response::HTTP_BAD_REQUEST);
         }
         
+        if (strlen($orderListName) < 3) {
+            return $this->json([
+                'success' => false,
+                'error' => 'Order list name must be at least 3 characters'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+        
+        if (strlen($orderListName) > 100) {
+            return $this->json([
+                'success' => false,
+                'error' => 'Order list name must not exceed 100 characters'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+        
+        // Validate characters (letters, numbers, spaces, hyphens, underscores, dots, commas, ampersands, umlauts)
+        if (!preg_match('/^[a-zA-Z0-9\s\-_.,&äöüßÄÖÜ]+$/', $orderListName)) {
+            return $this->json([
+                'success' => false,
+                'error' => 'Order list name contains invalid characters'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+        
         if (strlen($orderListName) > 255) {
             return $this->json([
                 'success' => false,
@@ -96,6 +118,7 @@ class OrderListController  extends StorefrontController
         // Parse CSV if provided
         $products = [];
         $csvErrors = [];
+        $warnings = [];
         
         if ($csvFile && $csvFile->getSize() > 0) {
             // Validate CSV file
@@ -170,8 +193,7 @@ class OrderListController  extends StorefrontController
                 ];
             }
             
-            // Show CSV parsing errors but continue (warnings)
-            $warnings = [];
+            // Collect CSV parsing errors as warnings
             foreach (array_slice($csvErrors, 0, 10) as $error) {
                 $warnings[] = 'CSV Error: ' . $error;
             }
@@ -241,16 +263,32 @@ class OrderListController  extends StorefrontController
         }
         
         $productCount = count($products);
-        $message = "Order list '{$orderListName}' created";
+        $linkedCount = count($linkedProducts ?? []);
+        $notFoundCount = $productCount - $linkedCount;
+        
+        // Build message
+        $messages = [];
+        $messages[] = "Order list '{$orderListName}' created successfully";
         if ($productCount > 0) {
-            $message .= " with {$productCount} product(s)";
+            $messages[] = "{$linkedCount} of {$productCount} product(s) linked";
+        }
+        if ($notFoundCount > 0) {
+            $messages[] = "⚠️ {$notFoundCount} product(s) not found in system";
+        }
+        
+        // Add warnings to messages
+        if (!empty($warnings)) {
+            $messages = array_merge($messages, $warnings);
         }
         
         return $this->json([
             'success' => true,
-            'message' => $message,
+            'message' => implode('; ', $messages),
+            'messages' => $messages,
             'orderListId' => $orderListId,
-            'productCount' => $productCount
+            'productCount' => $productCount,
+            'linkedCount' => $linkedCount,
+            'notFoundCount' => $notFoundCount
         ]);
     }
 
