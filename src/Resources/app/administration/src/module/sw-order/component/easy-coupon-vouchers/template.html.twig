@@ -1,0 +1,19 @@
+<div class="neti-easy-coupon-order-detail-vouchers">
+    <neti-easy-coupon-order-detail-vouchers-grid
+            v-if="redeemedItems.length > 0"
+            type="redeemed"
+            :title="$t('neti-easy-coupon.order-detail.redeemedTitle')"
+            :data="redeemedItems"
+            :order="order"
+            :is-loading="isLoading"
+    ></neti-easy-coupon-order-detail-vouchers-grid>
+
+    <neti-easy-coupon-order-detail-vouchers-grid
+            v-if="purchasedItems.length > 0"
+            type="purchased"
+            :title="$t('neti-easy-coupon.order-detail.purchasedTitle')"
+            :data="purchasedItems"
+            :order="order"
+            :is-loading="isLoading"
+    ></neti-easy-coupon-order-detail-vouchers-grid>
+</div>

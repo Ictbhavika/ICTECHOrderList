@@ -10,8 +10,15 @@
             "searchProduct": "Search Products",
             "csvImport": "CSV Import",
             "searchProductLabel": "Search by name or SKU...",
+            "products": "products",
+            "created": "Created:",
+            "updated": "Updated:",
+            "openList": "Open List",
+            "addAllToCart": "Add All to Cart",
             "emptyState": {
-                "title": "No orders list found"
+                "title": "No order lists yet",
+                "description": "Create your first list to save products for later.",
+                "button": "Create Order List"
             }
         }
     }

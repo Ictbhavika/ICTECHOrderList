@@ -10,8 +10,15 @@
             "searchProduct": "Produkte suchen",
             "csvImport": "CSV-Import",
             "searchProductLabel": "Suchen Sie nach Name oder SKU...",
+            "products": "Produkte",
+            "created": "Erstellt:",
+            "updated": "Aktualisiert:",
+            "openList": "Liste öffnen",
+            "addAllToCart": "Alle in den Warenkorb",
             "emptyState": {
-                "title": "Keine Bestellungen gefunden"
+                "title": "Noch keine Bestelllisten",
+                "description": "Erstellen Sie Ihre erste Liste, um Produkte für später zu speichern.",
+                "button": "Bestelliste erstellen"
             }
         }
     }

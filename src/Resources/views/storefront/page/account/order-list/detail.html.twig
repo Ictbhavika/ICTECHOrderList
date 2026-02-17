@@ -1,0 +1,131 @@
+{% sw_extends '@Storefront/storefront/page/account/_page.html.twig' %}
+
+{% block page_account_main_content %}
+	<div class="order-list-detail">
+		<!-- Header -->
+		<div class="d-flex justify-content-between align-items-center mb-4">
+			<div>
+				<a href="{{ path('frontend.account.order-list.page') }}" class="btn btn-sm btn-outline-secondary mb-2">
+					<svg width="12" height="12" fill="currentColor" class="me-1"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/></svg>
+					Back to Lists
+				</a>
+				<h1 class="h2 mb-0">{{ orderList.name }}</h1>
+			</div>
+			<div class="d-flex gap-2">
+				<div data-order-list-search>
+					<input type="text" class="form-control form-control-sm" placeholder="Search products..." data-search-input>
+				</div>
+				<button class="btn btn-primary">
+					<svg width="16" height="16" fill="currentColor" class="me-1"><path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg>
+					{{ "ictectechOrderList.account.addAllToCart"|trans|sw_sanitize }}
+				</button>
+			</div>
+		</div>
+
+		<!-- Products Table -->
+		<div class="card border-0 shadow-sm">
+			<div class="card-body p-0">
+				<div class="table-responsive">
+					<table class="table table-hover mb-0">
+						<thead class="table-light">
+							<tr>
+								<th>Product</th>
+								<th>Product Number</th>
+								<th class="text-center">Quantity</th>
+								<th class="text-end">Unit Price</th>
+								<th class="text-end">Total</th>
+								<th class="text-end">Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% if orderList.extensions.orderListProduct %}
+								{% set grandTotal = 0 %}
+								{% for item in orderList.extensions.orderListProduct %}
+									<tr data-item-id="{{ item.id }}" data-search-item>
+										<td>
+											<div class="d-flex align-items-center">
+												{% if item.product and item.product.cover %}
+													<img src="{{ item.product.cover.media.url }}" alt="{{ item.product.name }}" class="me-3" style="width: 50px; height: 50px; object-fit: cover;">
+												{% endif %}
+												<div>
+													<strong>{{ item.product ? item.product.translated.name : item.productNumber }}</strong>
+												</div>
+											</div>
+										</td>
+										<td class="align-middle">{{ item.productNumber }}</td>
+										<td class="text-center align-middle">
+											<div class="input-group input-group-sm" style="width: 120px; margin: 0 auto;">
+												<button class="btn btn-outline-secondary" type="button" onclick="updateQty('{{ item.id }}', -1)">
+													<svg width="12" height="12" fill="currentColor"><path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/></svg>
+												</button>
+												<input type="number" class="form-control text-center" value="{{ item.qty }}" min="1" id="qty-{{ item.id }}" onchange="updateQtyDirect('{{ item.id }}', this.value)">
+												<button class="btn btn-outline-secondary" type="button" onclick="updateQty('{{ item.id }}', 1)">
+													<svg width="12" height="12" fill="currentColor"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg>
+												</button>
+											</div>
+										</td>
+										<td class="text-end align-middle" id="unit-price-{{ item.id }}">
+											{% if item.product and item.product.calculatedPrice %}
+												{{ item.product.calculatedPrice.unitPrice|currency }}
+												{% set unitPrice = item.product.calculatedPrice.unitPrice %}
+												{% set total = unitPrice * item.qty %}
+												{% set grandTotal = grandTotal + total %}
+											{% else %}
+												-
+											{% endif %}
+										</td>
+										<td class="text-end align-middle fw-bold" id="total-{{ item.id }}">
+											{% if item.product and item.product.calculatedPrice %}
+												{{ total|currency }}
+											{% else %}
+												-
+											{% endif %}
+										</td>
+										<td class="text-end align-middle">
+											<button class="btn btn-sm btn-outline-danger ms-1" onclick="deleteItem('{{ item.id }}')">
+												<svg width="14" height="14" fill="currentColor"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg>
+											</button>
+										</td>
+									</tr>
+								{% endfor %}
+								<tr class="table-light fw-bold">
+									<td colspan="4" class="text-end">Grand Total:</td>
+									<td class="text-end" id="grand-total">{{ grandTotal|currency }}</td>
+									<td></td>
+								</tr>
+							{% else %}
+								<tr>
+									<td colspan="6" class="text-center py-5 text-muted">
+										No products in this list
+									</td>
+								</tr>
+							{% endif %}
+						</tbody>
+					</table>
+				</div>
+				
+				<!-- Pagination -->
+				{% if total > limit %}
+				<div class="p-3 border-top">
+					<nav>
+						<ul class="pagination justify-content-center mb-0">
+							{% set maxPage = (total / limit)|round(0, 'ceil') %}
+							<li class="page-item {{ page == 1 ? 'disabled' }}">
+								<a class="page-link" href="{{ page > 1 ? path('frontend.order-list.detail', {id: orderList.id, p: page - 1}) : '#' }}">&laquo;</a>
+							</li>
+							{% for i in 1..maxPage %}
+								<li class="page-item {{ i == page ? 'active' }}">
+									<a class="page-link" href="{{ path('frontend.order-list.detail', {id: orderList.id, p: i}) }}">{{ i }}</a>
+								</li>
+							{% endfor %}
+							<li class="page-item {{ page == maxPage ? 'disabled' }}">
+								<a class="page-link" href="{{ page < maxPage ? path('frontend.order-list.detail', {id: orderList.id, p: page + 1}) : '#' }}">&raquo;</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

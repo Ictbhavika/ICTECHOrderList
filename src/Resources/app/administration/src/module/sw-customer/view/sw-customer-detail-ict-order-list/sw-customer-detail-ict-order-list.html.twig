@@ -1,0 +1,55 @@
+{% block sw_customer_detail_ict_order_list %}
+<div v-if="orderLists && orderLists.length > 0">
+    <mt-card
+        v-for="orderList in orderLists"
+        :key="orderList.id"
+        :is-loading="isLoading"
+        class="sw-customer-detail-ict-order-list-card"
+    >
+        <template #title>
+            <div @click="toggleAccordion(orderList.id)" class="order-list-card-title">
+                <mt-icon :name="isExpanded(orderList.id) ? 'regular-chevron-down-xs' : 'regular-chevron-right-xs'" size="16px" />
+                <span>{{ orderList.name || 'Order List' }}</span>
+            </div>
+        </template>
+
+        <div v-show="isExpanded(orderList.id)">
+            <div v-if="orderList.extensions.orderListProduct && orderList.extensions.orderListProduct.length > 0">
+                <table class="order-list-table">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Product Number</th>
+                            <th>Quantity</th>
+                            <th>Steps</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="productItem in getPaginatedProducts(orderList)" :key="productItem.id">
+                            <td>{{ getProductName(productItem) }}</td>
+                            <td>{{ productItem.productNumber || '-' }}</td>
+                            <td>{{ productItem.qty || 0 }}</td>
+                            <td>{{ productItem.product ? productItem.product.purchaseSteps : '-' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <mt-empty-state
+                v-else
+                icon="solid-shopping-bag"
+                headline="No products"
+                description="This order list has no products"
+            />
+        </div>
+    </mt-card>
+</div>
+
+<mt-card v-else :is-loading="isLoading" title="Order Lists">
+    <mt-empty-state
+        icon="solid-shopping-bag"
+        headline="No order lists yet"
+        description="This customer has no order lists"
+    />
+</mt-card>
+{% endblock %}

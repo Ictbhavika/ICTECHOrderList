@@ -6,6 +6,7 @@ use ICTECHOrderList\Core\Content\OrderList\Aggregate\OrderListTranslation\OrderL
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
 use Shopware\Core\Checkout\Customer\CustomerEntity;
+use ICTECHOrderList\Core\Content\OrderProductList\OrderProductListCollection;
 
 class OrderListEntity extends Entity
 {
@@ -16,6 +17,7 @@ class OrderListEntity extends Entity
     protected string $customerId;
     protected ?CustomerEntity $customer = null;
     protected ?OrderListTranslationCollection $translations = null;
+    protected ?OrderProductListCollection $products = null;
     protected ?\DateTimeInterface $createdAt = null;
     protected ?\DateTimeInterface $updatedAt = null;
 
@@ -67,6 +69,16 @@ class OrderListEntity extends Entity
     public function setTranslations(OrderListTranslationCollection $translations): void
     {
         $this->translations = $translations;
+    }
+
+    public function getProducts(): ?OrderProductListCollection
+    {
+        return $this->products;
+    }
+
+    public function setProducts(OrderProductListCollection $products): void
+    {
+        $this->products = $products;
     }
 
     public function getCreatedAt(): ?\DateTimeInterface
