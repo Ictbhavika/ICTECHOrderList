@@ -16,6 +16,8 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\CreatedAtField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\UpdatedAtField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\OneToManyAssociationField;
+use ICTECHOrderList\Core\Content\OrderProductList\OrderProductListDefination;
 
 class OrderListDefination extends EntityDefinition
 {
@@ -42,6 +44,7 @@ class OrderListDefination extends EntityDefinition
             (new ManyToOneAssociationField('customer', 'customer_id', CustomerDefinition::class, 'id', false))->addFlags(new ApiAware()),
             new TranslatedField('name'),
             (new TranslationsAssociationField(OrderListTranslationDefinition::class, 'ictech_order_list_id'))->addFlags(new ApiAware(), new Required()),
+            (new OneToManyAssociationField('products', OrderProductListDefination::class, 'ictech_order_list_id'))->addFlags(new ApiAware()),
             new CreatedAtField(),
             new UpdatedAtField(),
         ]);

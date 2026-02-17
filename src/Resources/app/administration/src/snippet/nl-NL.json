@@ -1,0 +1,202 @@
+{
+    "neti-easy-coupon": {
+        "sidebar-menu": {
+            "easy-coupon": {
+                "title": "EasyCoupon",
+                "coupons": "Coupons",
+                "purchasableCoupons": "Aankoopcoupons",
+                "log": "Log",
+                "transactions": "Transacties"
+            }
+        },
+        "cart-processor": {
+            "label": "Wanneer moeten EasyCoupon vouchers worden ingewisseld?",
+            "helpText": "Bepaal hier hoe de volgorde van de aflossing is.",
+            "placeholder": "Kies een optie..."
+        },
+        "viewMode": {
+            "cartProcessor": {
+                "default": "Instelling van plugin configuratie",
+                "before": "Voor Shopware promoties",
+                "after": "Na Shopware promoties"
+            }
+        },
+        "value-types": {
+            "10010": "absoluut",
+            "10020": "percentage"
+        },
+        "voucher-types": {
+            "40010": "universeel",
+            "40020": "individueel"
+        },
+        "product-value-types": {
+            "20010": "Vaste waarde",
+            "20020": "Individuele waarde",
+            "20030": "Vooraf gedefinieerde waarden"
+        },
+        "product-value-type-select": {
+            "label": "Type tegoedbon",
+            "helpText": ""
+        },
+        "value-type-select": {
+            "label": "Aftrek",
+            "helpText": "Kies het type aftrek."
+        },
+        "voucher-type-select": {
+            "label": "Modus",
+            "helpText": "",
+            "helpTexts": {
+                "40010": "Modus: <strong>Universal</strong> <p>de voucher kan door elke klant worden ingewisseld voor de volledige waarde. <br/> Gebruik de voorwaarde maximale aflossingen om het aantal aflossingen te beperken.</p>",
+                "40020": "Modus: <strong>Individual</strong> <p>de voucher kan eenmaal door klanten worden ingewisseld voor de volledige waarde. Als de vouchercode wordt doorgegeven, wordt rekening gehouden met de resterende waarde.</p>"
+            }
+        },
+        "combine-vouchers-field": {
+            "label": "Kan worden gecombineerd met andere vouchers?",
+            "inheritLabel": "Waarde overnemen uit plug-inconfiguratie 'Combineren algemeen toestaan?'",
+            "yesLabel": "Ja",
+            "noLabel": "Nee"
+        },
+        "open-easy-coupon-product-link": {
+            "content": "Er is een aankoopbon toegewezen aan dit product. Klik op \"Aankoopbon openen\" om de aankoopbon te bewerken.",
+            "linkText": "Koopbare voucher openen"
+        },
+        "discard-changes-modal": {
+            "title": "Niet-opgeslagen wijzigingen",
+            "content": "Als u doorgaat, worden uw wijzigingen verwijderd.",
+            "confirmButton": "Ga verder",
+            "cancelButton": "Afbreken"
+        },
+        "customer": {
+            "tabTitle": "Vouchers",
+            "tabContent": "Klantenvouchers",
+            "fetchingError": "Er is een fout opgetreden bij het laden van vouchers.",
+            "noVouchersMessage": "Deze klant heeft geen vouchers.",
+            "column": {
+                "paid": "Betaald",
+                "title": "Titel",
+                "code": "Code",
+                "value": "Waarde",
+                "cashedValue": "Verzilverde waarde",
+                "restValue": "Restwaarde"
+            }
+        },
+        "order-detail": {
+            "hasVouchersAlert": "Deze bestelling heeft vouchers gekocht of ingewisseld. Zie hieronder voor meer informatie.",
+            "hasPostalOptionAlert": "Deze bestelling bevat aankoopbonnen met geselecteerde postbezorging.",
+            "hasRedeemedVouchersAlert": "Deze bestelling bevat ingewisselde vouchers. Controleer de totalen nadat je wijzigingen hebt aangebracht in de bestelitems, omdat vouchers altijd met hun oorspronkelijke waarde in de bestelling blijven staan.",
+            "redeemedTitle": "Ingewisselde vouchers (EasyCoupon)",
+            "purchasedTitle": "Koop vouchers (EasyCoupon)",
+            "voucher-list": {
+                "actionOpenVoucher": "Open voucher",
+                "unresolvedCode": "Onopgelost",
+                "unresolvedCodeHelpText": "De code is onopgelost omdat dit veld alleen beschikbaar is voor nieuwe bestellingen sinds plugin versie 4.5.0",
+                "column": {
+                    "name": "Naam",
+                    "code": "Code",
+                    "postal": "Post bezorgen",
+                    "value": "Waarde",
+                    "shippingCostReduction": "Vermindering van verzending",
+                    "deliveryDate": "Dag van levering",
+                    "deliveryMessage": "Begroeting",
+                    "recipientMail": "E-mail ontvanger",
+                    "recipientName": "Naam ontvanger"
+                },
+                "type": {
+                    "voucher": "Ingewisselde voucher",
+                    "purchasableVoucher": "Gekochte voucher",
+                    "invalid": "Type ongeldig"
+                },
+                "postal-value": {
+                    "yes": "Ja",
+                    "no": "Geen"
+                }
+            }
+        },
+        "export-profile": {
+            "entityEasyCoupon": "EasyCoupon"
+        },
+        "outdated-vouchers-notification": {
+            "title": "EasyCoupon",
+            "message": "<b>Actie vereist</b>: Er zijn vouchers met afrondingsfouten. Voer de volgende consoleopdracht uit om dit te herstellen: <br /> <br /> <b>neti:ec:fix:purchase_voucher_rounding</b>",
+            "buttonIgnore": "Niet opnieuw herinneren"
+        }
+    },
+    "global": {
+        "error-codes": {
+            "neti-easy-coupon": {
+                "productNumberAlreadyInUse": "Dit productnummer is al bezet.",
+                "codeNotAvailable": "Deze kortingscode is al gebruikt. Kies een andere."
+            }
+        },
+        "entities": {
+            "neti_easy_coupon": "EC vouchers",
+            "neti_easy_coupon_product": "Inkoopbare EC-vouchers",
+            "neti_easy_coupon_transaction": "EC voucher transactie",
+            "neti_easy_coupon_log": "EC logs"
+        },
+        "sw-condition": {
+            "condition": {
+                "netiEasyCouponUsesPerCustomerRule": "Maximaal aantal aflossingen (per klant)",
+                "netiEasyCouponCustomerRule": "Klanten",
+                "netiEasyCouponTotalUsesRule": "Maximale terugbetalingen (wereldwijd)",
+                "netiEasyCouponMailAddressRule": "E-mailadres",
+                "lineItemOfTypeRule": {
+                    "easyCoupon": "EasyCoupon voucher verlossing"
+                },
+                "netiEasyCouponVoucherTag": "Voucher in winkelwagen met tag",
+                "netiEasyCouponVoucherMailed": "Voucher met postbezorging in de winkelwagen",
+                "netiEasyCouponBillingCountryIsVoucherCountry": "Het huidige factureringsland en het factureringsland van de bestelde voucher komen overeen.",
+                "netiEasyCouponShippingCountryIsVoucherCountry": "Het huidige verzendland en het verzendland van de bestelde voucher komen overeen.",
+                "netiNextEasyCouponRuleBuilderRule": "Regelt"
+            }
+        },
+        "businessEvents": {
+            "neti_easy_coupon_coupon_activate": "EasyCoupon: Aankoopbon is betaald",
+            "neti_easy_coupon_requested_delivery_send": "EasyCoupon: Gevraagde levering",
+            "neti_easy_coupon_successful_delivery_send": "EasyCoupon: Afleverbevestiging voor de koper (geslaagd)",
+            "neti_easy_coupon_unsuccessful_delivery_send": "EasyCoupon: Afleverbevestiging voor de koper (mislukt)",
+            "neti_easy_coupon_unsuccessful_delivery_send_to_customer": "EasyCoupon: Afleverbevestiging voor de koper (mislukt)",
+            "neti_easy_coupon_unsuccessful_delivery_send_to_host": "EasyCoupon: Afleverbevestiging voor de host (mislukt)"
+        },
+        "sw-condition-generic": {
+            "cartLineItemOfType": {
+                "lineItemType": {
+                    "options": {
+                        "easy-coupon": "@:global.sw-condition.condition.lineItemOfTypeRule.easyCoupon"
+                    }
+                }
+            }
+        }
+    },
+    "sw-order": {
+        "createBase": {
+            "textPromotionDescription": {
+                "netiEasyCoupon": {
+                    "10010": "Absolute waardebon",
+                    "10020": "Percentage voucher"
+                }
+            }
+        }
+    },
+    "sw-flow": {
+        "triggers": {
+            "netiEasyCoupon": "EasyCoupon",
+            "successfulDelivery": "Succesvolle levering",
+            "coupon": "Coupon",
+            "activate": "Activeer",
+            "requestedDelivery": "Gewenste levering",
+            "unsuccessfulDelivery": "Niet succesvolle levering",
+            "sendToCustomer": "Verzenden naar klant",
+            "sendToHost": "Verzenden naar host",
+            "assignedToCustomer": "Toegewezen klanten",
+            "transaction": "Transactie",
+            "mailToCustomer": "Mail naar klanten"
+        }
+    },
+    "sw-flow-custom-event": {
+        "flow-list": {
+            "neti_easy_coupon_transaction_mail_to_customer": "EasyCoupon: Melding van transactie door admin",
+            "neti_easy_coupon_coupon_assigned_to_customer": "EasyCoupon: Klantopdracht - Klant informeren"
+        }
+    }
+}

@@ -1,0 +1,72 @@
+.sw-customer-detail-ict-order-list-card {
+    margin-bottom: 20px;
+
+    .order-list-card-title {
+        cursor: pointer;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .order-list-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+
+        thead tr {
+            border-bottom: 2px solid #d1d9e0;
+        }
+
+        th {
+            padding: 10px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        td {
+            padding: 10px;
+        }
+    }
+
+    .sw-pagination {
+        margin-top: 20px;
+        padding: 10px 0;
+    }
+
+    .custom-pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        margin-top: 20px;
+        padding: 15px 0;
+
+        .pagination-btn {
+            padding: 8px 16px;
+            border: 1px solid #d1d9e0;
+            background: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+
+            &:hover:not(:disabled) {
+                background: #f5f5f5;
+            }
+
+            &:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+        }
+
+        .pagination-info {
+            font-size: 14px;
+            color: #52667a;
+        }
+    }
+}

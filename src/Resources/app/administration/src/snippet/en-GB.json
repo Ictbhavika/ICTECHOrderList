@@ -1,0 +1,31 @@
+{
+    "ict-order-list": {
+        "customer": {
+            "tabTitle": "Order List",
+            "tabContent": "Customer Order List",
+            "fetchingError": "There was an error loading vouchers.",
+            "noVouchersMessage": "This customer has no vouchers.",
+            "column": {
+                "paid": "Paid",
+                "title": "Title",
+                "code": "Code",
+                "value": "Value",
+                "cashedValue": "Cashed value",
+                "restValue": "Rest value"
+            }
+        },
+        "order-list": {
+            "sidebar-filter": {
+                "hasVoucherProductLabel": "Voucher product in order",
+                "hasEasyCouponProductPlaceHolder": "Orders with vouchers product...",
+                "optionAtLeastOne": "Voucher product present",
+                "optionAll": "Only voucher products",
+                "optionNone": "No voucher products",
+                "hasEasyCouponPlaceHolder": "Orders with redeemed vouchers...",
+                "hasVoucherLabel": "Vouchers redeemed",
+                "optionTrue": "Yes",
+                "optionFalse": "No"
+            }
+        }
+    }
+}

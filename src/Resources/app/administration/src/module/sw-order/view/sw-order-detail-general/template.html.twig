@@ -1,0 +1,37 @@
+{% block sw_order_detail_general_info_card %}
+    <sw-alert
+            v-if="hasEasyCouponVouchers"
+            class="neti-easy-coupon--order-has-vouchers"
+    >
+        {{ $t('neti-easy-coupon.order-detail.hasVouchersAlert') }}
+    </sw-alert>
+
+    <sw-alert
+            v-if="hasEasyCouponPostalOption"
+            class="neti-easy-coupon--order-has-postal-option"
+    >
+        {{ $t('neti-easy-coupon.order-detail.hasPostalOptionAlert') }}
+    </sw-alert>
+
+    {% parent %}
+{% endblock %}
+
+{% block sw_order_detail_general_line_items_card %}
+    <neti-easy-coupon-order-detail-vouchers
+            v-if="hasEasyCouponVouchers"
+            :order="order"
+            :data="easyCouponVouchers"
+            :is-loading="isLoading"
+    ></neti-easy-coupon-order-detail-vouchers>
+
+    <sw-alert
+        v-if="hasRedeemedEasyCouponVouchers"
+        class="neti-easy-coupon--order-has-vouchers"
+        variant="warning"
+    >
+        {{ $t('neti-easy-coupon.order-detail.hasRedeemedVouchersAlert') }}
+    </sw-alert>
+
+    {% parent %}
+{% endblock %}
+

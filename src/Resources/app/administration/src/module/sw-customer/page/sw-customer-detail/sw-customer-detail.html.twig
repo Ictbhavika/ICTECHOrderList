@@ -1,0 +1,13 @@
+{# {% sw_extends '@Administration/sw-customer/page/sw-customer-detail/sw-customer-detail.html.twig' %} #}
+
+{% block sw_customer_detail_content_tab_after %}
+    {% parent %}
+    
+    <sw-tabs-item
+        class="sw-customer-detail__tab-ict-order-list"
+        :route="ictOrderListRoute"
+        :title="$t('ict-order-list.customer.tabTitle')"
+    >
+        {{ $t('ict-order-list.customer.tabContent') }}
+    </sw-tabs-item>
+{% endblock %}

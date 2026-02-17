@@ -16,7 +16,7 @@ class OrderListExtension extends EntityExtension
     public function extendFields(FieldCollection $collection): void
     {
         $collection->add(
-            new OneToManyAssociationField('orderListProduct', OrderProductListDefination::class, 'order_list_id', 'id')
+            new OneToManyAssociationField('orderListProduct', OrderProductListDefination::class, 'ictech_order_list_id', 'id')
         );
     }
   
