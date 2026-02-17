@@ -24,24 +24,20 @@ export default class IctechOrderList extends window.PluginBaseClass {
             return;
         }
 
-        // prefer the dedicated CSV upload form if present (avoids nested-form issues)
-        const csvForm = DomAccess.querySelector(this.el, '#ictech-orderlist-csv-upload-form', false);
-        const form = csvForm || this.el.closest('form') || DomAccess.querySelector(this.el, 'form', false);
+        this._clearErrors();
+        const form = this.el.closest('form') || DomAccess.querySelector(this.el, 'form', false);
         const url = (form && form.action) ? form.action : '/order-list/create';
         const formData = form ? new FormData(form) : new FormData();
-
-        console.log("url",url);
-        
-        formData.append('csvFile', file);
-        // const formData = new FormData(this.csvForm);
-       // ElementLoadingIndicatorUtil.create(this.el);
-       // ElementLoadingIndicatorUtil.start(this.el);
 
         const httpClient = new HttpClient();
         httpClient.post(url, formData, (responseText, request) => {
             if (request && request.status >= 400) {
-                console.error('Error uploading CSV:', responseText);
-                alert('There was an error uploading the CSV file. Please try again.');
+                try {
+                    const errorResponse = JSON.parse(responseText);
+                    this._handleError(errorResponse.error || errorResponse.errors || responseText);
+                } catch (e) {
+                    this._handleError(responseText);
+                }
                 return;
             }
 
@@ -49,19 +45,79 @@ export default class IctechOrderList extends window.PluginBaseClass {
                 const response = JSON.parse(responseText);
                 
                 if (response.success) {
-                    console.log('Order list created successfully:', response);
-                    alert(response.message || 'Order list created successfully');
                     PseudoModalUtil.close(this.el);
-                    // Optional: refresh the page after a short delay
                     setTimeout(() => window.location.reload(), 500);
                 } else {
-                    console.error('Error creating order list:', response.error);
-                    alert('Error: ' + (response.error || 'Unknown error occurred'));
+                    this._handleError(response.error || response.errors);
                 }
             } catch (e) {
-                console.error('Error parsing response:', e, responseText);
-                alert('An unexpected error occurred. Please try again.');
+                this._handleError({csv: 'Invalid response from server'});
             }
         });
+    }
+
+    _handleError(error) {
+        const form = document.getElementById('ictech-orderlist-csv-upload-form');
+        if (!form) return;
+
+        if (typeof error === 'object' && error !== null) {
+            if (error.orderListName) {
+                const nameInput = form.querySelector('.js-orderlist-name');
+                const nameError = form.querySelector('.js-orderlist-error');
+                if (nameInput && nameError) {
+                    nameInput.classList.add('is-invalid');
+                    nameError.textContent = error.orderListName;
+                    nameError.style.display = 'block';
+                }
+            }
+            if (error.csv || error.file) {
+                const csvInput = form.querySelector('.js-csv-upload');
+                const csvError = form.querySelector('.js-csv-error');
+                if (csvInput && csvError) {
+                    csvInput.classList.add('is-invalid');
+                    csvError.textContent = error.csv || error.file;
+                    csvError.style.display = 'block';
+                }
+            }
+        } else if (typeof error === 'string') {
+            if (error.toLowerCase().includes('order') && error.toLowerCase().includes('name')) {
+                const nameInput = form.querySelector('.js-orderlist-name');
+                const nameError = form.querySelector('.js-orderlist-error');
+                if (nameInput && nameError) {
+                    nameInput.classList.add('is-invalid');
+                    nameError.textContent = error;
+                    nameError.style.display = 'block';
+                }
+            } else {
+                const csvInput = form.querySelector('.js-csv-upload');
+                const csvError = form.querySelector('.js-csv-error');
+                if (csvInput && csvError) {
+                    csvInput.classList.add('is-invalid');
+                    csvError.textContent = error;
+                    csvError.style.display = 'block';
+                }
+            }
+        }
+    }
+
+    _clearErrors() {
+        const form = document.getElementById('ictech-orderlist-csv-upload-form');
+        if (!form) return;
+
+        const nameInput = form.querySelector('.js-orderlist-name');
+        const nameError = form.querySelector('.js-orderlist-error');
+        const csvInput = form.querySelector('.js-csv-upload');
+        const csvError = form.querySelector('.js-csv-error');
+        
+        if (nameInput) nameInput.classList.remove('is-invalid');
+        if (nameError) {
+            nameError.textContent = '';
+            nameError.style.display = 'none';
+        }
+        if (csvInput) csvInput.classList.remove('is-invalid');
+        if (csvError) {
+            csvError.textContent = '';
+            csvError.style.display = 'none';
+        }
     }
 }
