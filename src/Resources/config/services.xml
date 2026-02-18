@@ -4,16 +4,14 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <!-- Definition service -->
-        <service id="ICTECHOrderList\Core\Content\OrderList\OrderListDefination" public="false">
+        <service id="ICTECHOrderList\Core\Content\OrderList\OrderListDefination">
             <tag name="shopware.entity.definition" entity="ictech_order_list" />
         </service>
         <service
-            id="ICTECHOrderList\Core\Content\OrderList\Aggregate\OrderListTranslation\OrderListTranslationDefinition"
-            public="false">
+            id="ICTECHOrderList\Core\Content\OrderList\Aggregate\OrderListTranslation\OrderListTranslationDefinition">
             <tag name="shopware.entity.definition" entity="ictech_order_list_translation" />
         </service>
-        <service id="ICTECHOrderList\Core\Content\OrderProductList\OrderProductListDefination"
-            public="false">
+        <service id="ICTECHOrderList\Core\Content\OrderProductList\OrderProductListDefination">
             <tag name="shopware.entity.definition" entity="ictech_order_product_list" />
         </service>
         <!-- Extension Service -->
@@ -31,7 +29,7 @@
         </service>
         <!-- Controller -->
         <service id="ICTECHOrderList\Storefront\Controller\OrderListController" public="true">
-            <argument type="service" id="product.repository"/>
+            <argument type="service" id="sales_channel.product.repository"/>
             <argument type="service" id="ictech_order_list.repository"/>
             <argument type="service" id="ictech_order_product_list.repository"/>
             <call method="setContainer">

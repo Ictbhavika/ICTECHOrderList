@@ -7,14 +7,41 @@
             "createOrderListBtn": "Create Order List",
             "orderlistModelLabel": "Search products, import CSV and quickly add items to your cart.",
             "orderListName": "Order List Name",
+            "orderListNamePlaceholder": "Enter list name...",
             "searchProduct": "Search Products",
             "csvImport": "CSV Import",
+            "csvDownloadDemo": "Download Demo CSV",
             "searchProductLabel": "Search by name or SKU...",
             "products": "products",
             "created": "Created:",
             "updated": "Updated:",
             "openList": "Open List",
             "addAllToCart": "Add All to Cart",
+            "action": {
+                "rename": "Rename",
+                "duplicate": "Duplicate",
+                "delete": "Delete",
+                "openList": "Open List"
+            },
+            "modal": {
+                "cancel": "Cancel",
+                "rename": {
+                    "title": "Rename List",
+                    "label": "New Name",
+                    "submit": "Rename"
+                },
+                "duplicate": {
+                    "title": "Duplicate List",
+                    "label": "Name for Copy",
+                    "submit": "Duplicate"
+                },
+                "delete": {
+                    "title": "Delete List",
+                    "message": "Are you sure you want to delete",
+                    "warning": "This action cannot be undone.",
+                    "submit": "Delete"
+                }
+            },
             "emptyState": {
                 "title": "No order lists yet",
                 "description": "Create your first list to save products for later.",

@@ -6,7 +6,6 @@ namespace ICTECHOrderList\Core\Content\Extension;
 
 use ICTECHOrderList\Core\Content\OrderList\OrderListDefination;
 use ICTECHOrderList\Core\Content\OrderProductList\OrderProductListDefination;
-use Shopware\Core\Content\Product\ProductDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityExtension;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\OneToManyAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;

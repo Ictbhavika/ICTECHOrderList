@@ -45,8 +45,11 @@ export default class IctechOrderList extends window.PluginBaseClass {
                 const response = JSON.parse(responseText);
                 
                 if (response.success) {
-                    PseudoModalUtil.close(this.el);
-                    setTimeout(() => window.location.reload(), 500);
+                    this._showSuccessMessage(response.message || 'Order list created successfully');
+                    this._clearForm();
+                    if (response.orderListId) {
+                        this._loadProducts(response.orderListId);
+                    }
                 } else {
                     this._handleError(response.error || response.errors);
                 }
@@ -64,11 +67,13 @@ export default class IctechOrderList extends window.PluginBaseClass {
             if (error.orderListName) {
                 const nameInput = form.querySelector('.js-orderlist-name');
                 const nameError = form.querySelector('.js-orderlist-error');
+                const csvInput = form.querySelector('.js-csv-upload');
                 if (nameInput && nameError) {
                     nameInput.classList.add('is-invalid');
                     nameError.textContent = error.orderListName;
                     nameError.style.display = 'block';
                 }
+                if (csvInput) csvInput.value = '';
             }
             if (error.csv || error.file) {
                 const csvInput = form.querySelector('.js-csv-upload');
@@ -83,11 +88,13 @@ export default class IctechOrderList extends window.PluginBaseClass {
             if (error.toLowerCase().includes('order') && error.toLowerCase().includes('name')) {
                 const nameInput = form.querySelector('.js-orderlist-name');
                 const nameError = form.querySelector('.js-orderlist-error');
+                const csvInput = form.querySelector('.js-csv-upload');
                 if (nameInput && nameError) {
                     nameInput.classList.add('is-invalid');
                     nameError.textContent = error;
                     nameError.style.display = 'block';
                 }
+                if (csvInput) csvInput.value = '';
             } else {
                 const csvInput = form.querySelector('.js-csv-upload');
                 const csvError = form.querySelector('.js-csv-error');
@@ -119,5 +126,99 @@ export default class IctechOrderList extends window.PluginBaseClass {
             csvError.textContent = '';
             csvError.style.display = 'none';
         }
+        
+        const successAlert = form.querySelector('.js-success-alert');
+        if (successAlert) {
+            successAlert.style.display = 'none';
+        }
+    }
+
+    _showSuccessMessage(message) {
+        const form = document.getElementById('ictech-orderlist-csv-upload-form');
+        if (!form) return;
+
+        let successAlert = form.querySelector('.js-success-alert');
+        if (!successAlert) {
+            successAlert = document.createElement('div');
+            successAlert.className = 'alert alert-success js-success-alert mt-3';
+            form.insertBefore(successAlert, form.firstChild);
+        }
+        
+        successAlert.textContent = message;
+        successAlert.style.display = 'block';
+        
+        setTimeout(() => {
+            if (successAlert) {
+                successAlert.style.display = 'none';
+            }
+        }, 5000);
+    }
+
+    _clearForm() {
+        const form = document.getElementById('ictech-orderlist-csv-upload-form');
+        if (!form) return;
+
+        const nameInput = form.querySelector('.js-orderlist-name');
+        const csvInput = form.querySelector('.js-csv-upload');
+        
+        if (nameInput) nameInput.value = '';
+        if (csvInput) csvInput.value = '';
+    }
+
+    _loadProducts(orderListId) {
+        const httpClient = new HttpClient();
+        httpClient.get(`/order-list/${orderListId}/products`, (responseText) => {
+            try {
+                const response = JSON.parse(responseText);
+                if (response.success && response.products) {
+                    this._displayProducts(response.products);
+                }
+            } catch (e) {
+                console.error('Failed to load products', e);
+            }
+        });
+    }
+
+    _displayProducts(products) {
+        const tbody = document.getElementById('orderlist-products');
+        if (!tbody) return;
+
+        tbody.innerHTML = '';
+
+        if (!products || products.length === 0) {
+            tbody.innerHTML = `
+                <tr class="empty-state">
+                    <td colspan="5" class="text-center py-5 text-muted">
+                        <div class="fw-semibold mb-1">No product added yet</div>
+                        <small>Search or import products to begin your order.</small>
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        products.forEach(product => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>
+                    <div class="d-flex align-items-center">
+                        ${product.image ? `<img src="${product.image}" alt="${product.name}" style="width: 40px; height: 40px; object-fit: cover;" class="me-2">` : ''}
+                        <div>
+                            <div class="fw-semibold">${product.name || product.productNumber}</div>
+                            <small class="text-muted">${product.productNumber}</small>
+                        </div>
+                    </div>
+                </td>
+                <td>${product.quantity || 1}</td>
+                <td>${product.price || '-'}</td>
+                <td>${product.total || '-'}</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-danger" onclick="removeProduct('${product.id}')">
+                        <svg width="14" height="14" fill="currentColor"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/></svg>
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
     }
 }
