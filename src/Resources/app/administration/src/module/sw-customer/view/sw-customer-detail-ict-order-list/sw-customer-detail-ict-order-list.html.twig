@@ -14,7 +14,7 @@
         </template>
 
         <div v-show="isExpanded(orderList.id)">
-            <div v-if="orderList.extensions.orderListProduct && orderList.extensions.orderListProduct.length > 0">
+            <div v-if="orderList.products && orderList.products.length > 0">
                 <table class="order-list-table">
                     <thead>
                         <tr>

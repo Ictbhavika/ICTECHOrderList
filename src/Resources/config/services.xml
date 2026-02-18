@@ -36,5 +36,12 @@
                 <argument type="service" id="service_container" />
             </call>
         </service>
+        <!-- Subscriber -->
+        
+        <service id="ICTECHOrderList\Subscriber\OrderPlacedSubscriber">
+            <argument type="service" id="ictech_order_list.repository"/>
+            <argument type="service" id="request_stack"/>
+            <tag name="kernel.event_subscriber"/>
+        </service>
     </services>
 </container>

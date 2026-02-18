@@ -47,6 +47,24 @@
                 "description": "Create your first list to save products for later.",
                 "button": "Create Order List"
             }
+        },
+        "detail": {
+            "backToLists": "Back to Lists",
+            "searchTitle": "Search Products",
+            "searchPlaceholder": "Search products...",
+            "csvTitle": "CSV Upload",
+            "uploadCsv": "Upload CSV",
+            "addAllToCart": "Add All to Cart",
+            "columnProduct": "Product",
+            "columnActions": "Actions",
+            "grandTotal": "Grand Total",
+            "emptyList": "No products in this list",
+            "modal": {
+                "removeTitle": "Remove Product",
+                "removeMessage": "Are you sure you want to remove this product from the list?",
+                "cancel": "Cancel",
+                "remove": "Remove"
+            }
         }
     }
 }

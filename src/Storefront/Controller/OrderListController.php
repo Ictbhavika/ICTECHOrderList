@@ -16,6 +16,8 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
 use Shopware\Core\Framework\Uuid\Uuid;
 use Shopware\Core\Framework\Struct\ArrayStruct;
 use Shopware\Core\System\SalesChannel\Entity\SalesChannelRepository;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
 
 #[Route(defaults: ['_routeScope' => ['storefront']])]
 class OrderListController  extends StorefrontController
@@ -313,6 +315,29 @@ class OrderListController  extends StorefrontController
         return $this->redirectToRoute('frontend.order-list.detail', ['id' => $id]);
     }
 
+    #[Route(path: '/order-list/product/update-qty', name: 'frontend.order-list.product.update-qty', defaults: ['_loginRequired' => true, 'XmlHttpRequest' => true, '_noStore' => true], methods: ['POST'])]
+    public function updateQuantity(Request $request, SalesChannelContext $context): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        $itemId = $data['itemId'] ?? null;
+        $qty = max(1, (int) ($data['qty'] ?? 1));
+
+        if (!$itemId) {
+            return $this->json(['success' => false, 'error' => 'Invalid item ID'], Response::HTTP_BAD_REQUEST);
+        }
+
+        try {
+            $this->orderProductListRepository->update([[
+                'id' => $itemId,
+                'qty' => $qty
+            ]], $context->getContext());
+
+            return $this->json(['success' => true]);
+        } catch (\Exception $e) {
+            return $this->json(['success' => false, 'error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     #[Route(path: '/order-list/product/{itemId}/delete', name: 'frontend.order-list.product.delete', defaults: ['_loginRequired' => true, '_noStore' => true], methods: ['POST', 'DELETE'])]
     public function deleteProduct(string $itemId, Request $request, SalesChannelContext $context): Response
     {
@@ -368,7 +393,10 @@ class OrderListController  extends StorefrontController
     #[Route(path: '/order-list/{id}', name: 'frontend.order-list.detail', defaults: ['_loginRequired' => true, '_noStore' => true], methods: ['GET'])]
     public function detail(string $id, Request $request, SalesChannelContext $context): Response
     {
-        $page = (int) $request->query->get('p', 1);
+        $session = $request->getSession();
+        $session->set('order_list_id_to_delete', $id);
+        
+        $page = max(1, (int) $request->query->get('p', 1));
         $limit = 10;
         $offset = ($page - 1) * $limit;
 
@@ -380,16 +408,15 @@ class OrderListController  extends StorefrontController
             throw $this->createNotFoundException();
         }
 
-        $products = $orderList->getExtension('orderListProduct') ?? [];
-        $total = count($products);
-        $paginatedProducts = array_slice($products->getElements(), $offset, $limit);
+        $allProducts = $orderList->getExtension('orderListProduct');
+        $total = $allProducts ? count($allProducts) : 0;
+        $paginatedProducts = $allProducts ? array_slice($allProducts->getElements(), $offset, $limit) : [];
 
-        $productIds = array_map(fn($item) => $item->get('productId'), $paginatedProducts);
-        
-        if (!empty($productIds)) {
+        // Load products with prices through SalesChannelRepository
+        if (!empty($paginatedProducts)) {
+            $productIds = array_map(fn($item) => $item->get('productId'), $paginatedProducts);
             $productCriteria = new Criteria($productIds);
             $productCriteria->addAssociation('cover.media');
-            $productCriteria->addAssociation('prices');
             $loadedProducts = $this->productRepository->search($productCriteria, $context);
 
             foreach ($paginatedProducts as $item) {
@@ -400,13 +427,26 @@ class OrderListController  extends StorefrontController
             }
         }
 
-        $orderList->addExtension('orderListProduct', new ArrayStruct($paginatedProducts));
+        $collection = new EntityCollection($paginatedProducts);
+        $criteria = new Criteria();
+        $criteria->setLimit($limit);
+        $criteria->setOffset($offset);
+        $criteria->setTotalCountMode(Criteria::TOTAL_COUNT_MODE_EXACT);
+        
+        $productSearchResult = new EntitySearchResult(
+            'order_list_product',
+            $total,
+            $collection,
+            null,
+            $criteria,
+            $context->getContext()
+        );
 
+        $orderList->addExtension('orderListProduct', new ArrayStruct($paginatedProducts));
+        
         return $this->renderStorefront('@Storefront/storefront/page/account/order-list/detail.html.twig', [
             'orderList' => $orderList,
-            'page' => $page,
-            'limit' => $limit,
-            'total' => $total
+            'products' => $productSearchResult
         ]);
     }
 
@@ -481,6 +521,32 @@ class OrderListController  extends StorefrontController
         }
 
         return $this->redirectToRoute('frontend.account.order-list.page');
+    }
+
+    #[Route(path: '/order-list/{id}/add-all-to-cart', name: 'frontend.order-list.add-all-to-cart', defaults: ['_loginRequired' => true, 'XmlHttpRequest' => true, '_noStore' => true], methods: ['POST'])]
+    public function addAllToCart(string $id, SalesChannelContext $context): Response
+    {
+
+    
+        $criteria = new Criteria([$id]);
+        $criteria->addAssociation('orderListProduct');
+        $orderList = $this->orderListRepository->search($criteria, $context->getContext())->first();
+        if (!$orderList || !$orderList->getExtension('orderListProduct')) {
+            return $this->json(['success' => false, 'error' => 'No products found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $items = [];
+        foreach ($orderList->getExtension('orderListProduct') as $item) {
+            $items[] = [
+                'id' => $item->get('productId'),
+                'quantity' => $item->get('qty'),
+                'type' => 'product',
+                'referencedId' => $item->get('productId')
+            ];
+        }
+        dd($items);
+
+        return $this->json(['success' => true, 'items' => $items]);
     }
 
     #[Route(path: '/order-list/delete', name: 'frontend.order-list.delete', defaults: ['_loginRequired' => true, '_noStore' => true], methods: ['POST'])]

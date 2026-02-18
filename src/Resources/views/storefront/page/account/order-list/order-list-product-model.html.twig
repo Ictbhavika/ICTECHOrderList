@@ -21,14 +21,7 @@
 									{{ "ictectechOrderList.account.orderListName"|trans|sw_sanitize }}
 									<span class="text-danger">*</span>
 								</label>
-								<input type="text" 
-									name="orderListName" 
-									class="form-control" 
-									required 
-									minlength="3"
-									maxlength="100"
-									placeholder="{{ "ictectechOrderList.account.orderListNamePlaceholder"|trans|sw_sanitize }}"
-								>
+								<input type="text" name="orderListName" class="form-control" required minlength="3" maxlength="100" placeholder="{{ "ictectechOrderList.account.orderListNamePlaceholder"|trans|sw_sanitize }}">
 							</div>
 
 							<div class="col-12 col-md-6">
@@ -45,8 +38,10 @@
 						</div>
 
 						<div class="modal-footer border-0 px-0 pb-0 mt-4 flex-column flex-sm-row gap-2">
-							<button type="button" class="btn btn-secondary w-100 w-sm-auto order-2 order-sm-1" data-bs-dismiss="modal">{{ "ictectechOrderList.account.modal.cancel"|trans|sw_sanitize }}</button>
-							<button type="submit" class="btn btn-primary w-100 w-sm-auto order-1 order-sm-2">{{ "ictectechOrderList.account.createOrderListBtn"|trans|sw_sanitize }}</button>
+							<div class="d-flex justify-content-end">
+								<button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">{{ "ictectechOrderList.account.modal.cancel"|trans|sw_sanitize }}</button>
+								<button type="submit" class="btn btn-primary">{{ "ictectechOrderList.account.createOrderListBtn"|trans|sw_sanitize }}</button>
+							</div>
 						</div>
 					</form>
 				</div>

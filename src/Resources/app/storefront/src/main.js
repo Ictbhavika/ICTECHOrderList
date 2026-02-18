@@ -4,3 +4,4 @@ window.PluginManager.register('OrderListSearch', () => import('./plugin/order-li
 window.PluginManager.register('OrderListCsvUpload', () => import('./plugin/order-list/order-list-csv-upload.plugin'), '[data-order-list-csv-upload]');
 window.PluginManager.register('FlashMessage', () => import('./plugin/order-list/flash-message.plugin'), '[data-flash-message]');
 window.PluginManager.register('OrderListModal', () => import('./plugin/order-list/order-list-modal.plugin'), '[data-order-list-modals]');
+window.PluginManager.register('OrderListQuantity', () => import('./plugin/order-list/order-list-quantity.plugin'), '[data-order-list-quantity]');
