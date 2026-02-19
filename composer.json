@@ -23,5 +23,15 @@
         "psr-4": {
             "ICTECHOrderList\\Tests\\": "tests/"
         }
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^2.1",
+        "nunomaduro/phpinsights": "^2.13"
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/runtime": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }

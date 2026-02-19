@@ -1,12 +1,14 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace ICTECHOrderList\Core\Content\OrderList;
 
 use ICTECHOrderList\Core\Content\OrderList\Aggregate\OrderListTranslation\OrderListTranslationCollection;
+use ICTECHOrderList\Core\Content\OrderProductList\OrderProductListCollection;
+use Shopware\Core\Checkout\Customer\CustomerEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
-use Shopware\Core\Checkout\Customer\CustomerEntity;
-use ICTECHOrderList\Core\Content\OrderProductList\OrderProductListCollection;
 
 class OrderListEntity extends Entity
 {

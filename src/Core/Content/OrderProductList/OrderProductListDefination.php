@@ -1,27 +1,29 @@
 <?php
- 
+
+declare(strict_types=1);
+
 namespace ICTECHOrderList\Core\Content\OrderProductList;
- 
+
+use ICTECHOrderList\Core\Content\OrderList\OrderListDefination;
+use Shopware\Core\Content\Product\ProductDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\CreatedAtField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\IntField;
-use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
-use Shopware\Core\Content\Product\ProductDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField;
-use ICTECHOrderList\Core\Content\OrderList\OrderListDefination;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\ReferenceVersionField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\CreatedAtField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\UpdatedAtField;
- 
+use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
+
 class OrderProductListDefination extends EntityDefinition
 {
     public const ENTITY_NAME = 'ictech_order_product_list';
- 
+
     public function getEntityName(): string
     {
         return self::ENTITY_NAME;
@@ -30,7 +32,7 @@ class OrderProductListDefination extends EntityDefinition
     {
         return OrderProductListCollection::class;
     }
- 
+
     public function getEntityClass(): string
     {
         return OrderProductListEntity::class;

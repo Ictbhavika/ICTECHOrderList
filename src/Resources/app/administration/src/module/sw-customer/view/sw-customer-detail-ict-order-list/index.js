@@ -21,9 +21,7 @@ Component.register('sw-customer-detail-ict-order-list', {
             orderLists: null,
             isLoading: false,
             expandedItems: [],
-            productNames: {},
-            pagination: {},
-            pageSize: 100
+            productNames: {}
         };
     },
 
@@ -86,26 +84,8 @@ Component.register('sw-customer-detail-ict-order-list', {
             return this.expandedItems.includes(id);
         },
 
-        getCurrentPage(orderListId) {
-            return this.pagination[orderListId] || 1;
-        },
-
         getPaginatedProducts(orderList) {
-            const page = this.getCurrentPage(orderList.id);
-            const start = (page - 1) * this.pageSize;
-            const end = start + this.pageSize;
-            return (orderList.products || []).slice(start, end);
-        },
-
-        getTotalProducts(orderList) {
-            return (orderList.products || []).length;
-        },
-
-        onPageChange(orderListId, pageData) {
-            if (pageData.limit) {
-                this.pageSize = pageData.limit;
-            }
-            this.pagination = { ...this.pagination, [orderListId]: pageData.page || pageData };
+            return orderList.products || [];
         },
 
         async buildProductName(productItem) {

@@ -1,10 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace ICTECHOrderList\Core\Content\OrderList;
 
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
 
 /**
+ * @extends EntityCollection<OrderListEntity>
  * @package framework
  * @method void                add(OrderListEntity $entity)
  * @method void                set(string $key, OrderListEntity $entity)

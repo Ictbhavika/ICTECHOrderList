@@ -23,13 +23,13 @@
 					<button class="btn btn-primary w-100 w-sm-auto" data-bs-toggle="modal" data-bs-target="#createOrderListModal">
 						{% sw_icon 'plus' style { size: 'sm', pack: 'solid' } %}
 						<span class="d-none d-sm-inline">{{ "ictectechOrderList.account.createOrderListBtn"|trans|sw_sanitize }}</span>
-						<span class="d-inline d-sm-none">Create</span>
 					</button>
 				</div>
 			</div>
 
 			{% if orderLists.total > 0 %}
-				<div class="row mb-4 g-3">
+				<div
+					class="row mb-4 g-3">
 					<!-- Search -->
 					<div class="col-12 col-md-4" data-order-list-search>
 						<input type="text" class="form-control" placeholder="Search lists..." data-search-input>
@@ -46,7 +46,6 @@
 					</div>
 				</div>
 			{% endif %}
-
 
 			{# EMPTY STATE #}
 			{% if orderLists.total == 0 %}
@@ -70,7 +69,7 @@
 								<span class="order-badge">{{ orderList.productCount }}</span>
 
 								<div class="dropdown order-menu">
-									<button class="btn btn-light" data-bs-toggle="dropdown" aria-label="Actions">
+									<button class="btn btn-light btn-outline-light" data-bs-toggle="dropdown" aria-label="Actions">
 										{% sw_icon 'more-vertical' %}
 									</button>
 									<ul class="dropdown-menu dropdown-menu-end shadow-sm">
@@ -96,7 +95,7 @@
 									</ul>
 								</div>
 
-								<h6 class="order-title text-truncate">{{ orderList.name }}</h6>
+								<h6 class="order-title text-truncate">{{ orderList.translated.name }}</h6>
 
 								<a href="{{ path('frontend.order-list.detail', {id: orderList.id}) }}" class="btn btn-outline-primary w-100 mt-auto">
 									<span class="d-none d-sm-inline">{{ "ictectechOrderList.account.action.openList"|trans|sw_sanitize }}</span>

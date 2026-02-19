@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace ICTECHOrderList\Migration;
 
@@ -9,7 +11,7 @@ use Shopware\Core\Framework\Migration\MigrationStep;
 /**
  * @internal
  */
-#[Package('core')]
+#[Package('checkout')]
 class Migration1771223708OrderProductList extends MigrationStep
 {
     public function getCreationTimestamp(): int

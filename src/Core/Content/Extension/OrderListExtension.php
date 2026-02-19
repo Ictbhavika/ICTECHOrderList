@@ -18,7 +18,7 @@ class OrderListExtension extends EntityExtension
             new OneToManyAssociationField('orderListProduct', OrderProductListDefination::class, 'ictech_order_list_id', 'id')
         );
     }
-  
+
     public function getEntityName(): string
     {
         return OrderListDefination::ENTITY_NAME;

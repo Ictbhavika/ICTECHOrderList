@@ -1,55 +1,61 @@
-{% block sw_customer_detail_ict_order_list %}
-<div v-if="orderLists && orderLists.length > 0">
-    <mt-card
-        v-for="orderList in orderLists"
-        :key="orderList.id"
-        :is-loading="isLoading"
-        class="sw-customer-detail-ict-order-list-card"
-    >
-        <template #title>
-            <div @click="toggleAccordion(orderList.id)" class="order-list-card-title">
-                <mt-icon :name="isExpanded(orderList.id) ? 'regular-chevron-down-xs' : 'regular-chevron-right-xs'" size="16px" />
-                <span>{{ orderList.name || 'Order List' }}</span>
-            </div>
-        </template>
+<div class="order-list-container">
 
-        <div v-show="isExpanded(orderList.id)">
-            <div v-if="orderList.products && orderList.products.length > 0">
-                <table class="order-list-table">
-                    <thead>
-                        <tr>
-                            <th>Product Name</th>
-                            <th>Product Number</th>
-                            <th>Quantity</th>
-                            <th>Steps</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="productItem in getPaginatedProducts(orderList)" :key="productItem.id">
-                            <td>{{ getProductName(productItem) }}</td>
-                            <td>{{ productItem.productNumber || '-' }}</td>
-                            <td>{{ productItem.qty || 0 }}</td>
-                            <td>{{ productItem.product ? productItem.product.purchaseSteps : '-' }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+	<mt-card
+		v-for="orderList in orderLists" :key="orderList.id" class="order-list-card">
 
-            </div>
-            <mt-empty-state
-                v-else
-                icon="solid-shopping-bag"
-                headline="No products"
-                description="This order list has no products"
-            />
-        </div>
-    </mt-card>
+		<!-- Header -->
+		<div class="order-list-card-header" @click="toggleAccordion(orderList.id)">
+
+			<div class="order-list-left">
+				<span class="order-list-name">
+					{{ orderList.name }}
+				</span>
+
+				<span class="order-list-count">
+					{{ orderList.products?.length || 0 }}
+					Products
+				</span>
+			</div>
+
+			<mt-icon name="regular-chevron-down-xs" class="order-chevron" :class="{ 'is-open': isExpanded(orderList.id) }"/>
+		</div>
+
+		<!-- Body -->
+		<div v-if="isExpanded(orderList.id)" class="order-list-card-body">
+
+			<div v-if="orderList.products?.length > 0">
+
+				<div class="order-list-table-wrapper">
+					<table class="order-list-table">
+						<thead>
+							<tr>
+								<th>Product</th>
+								<th>Product No</th>
+								<th>Qty</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="product in orderList.products" :key="product.id">
+
+								<td class="product-name">
+									{{ getProductName(product) }}
+								</td>
+
+								<td>{{ product.productNumber }}</td>
+
+								<td>
+									<span class="qty-badge">
+										{{ product.qty }}
+									</span>
+								</td>
+
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+			<mt-empty-state v-else icon="solid-shopping-bag" headline="No products found"/>
+		</div>
+	</mt-card>
 </div>
-
-<mt-card v-else :is-loading="isLoading" title="Order Lists">
-    <mt-empty-state
-        icon="solid-shopping-bag"
-        headline="No order lists yet"
-        description="This customer has no order lists"
-    />
-</mt-card>
-{% endblock %}

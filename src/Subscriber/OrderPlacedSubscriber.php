@@ -17,10 +17,13 @@ class OrderPlacedSubscriber implements EventSubscriberInterface
     ) {
     }
 
+    /**
+     * @return array<string, string>
+     */
     public static function getSubscribedEvents(): array
     {
         return [
-            CheckoutOrderPlacedEvent::class => 'onOrderPlaced'
+            CheckoutOrderPlacedEvent::class => 'onOrderPlaced',
         ];
     }
 
@@ -37,9 +40,9 @@ class OrderPlacedSubscriber implements EventSubscriberInterface
         if ($orderListId) {
             try {
                 $this->orderListRepository->delete([
-                    ['id' => $orderListId]
+                    ['id' => $orderListId],
                 ], $event->getContext());
-                
+
                 $session->remove('order_list_id_to_delete');
             } catch (\Exception $e) {
                 // Silent fail

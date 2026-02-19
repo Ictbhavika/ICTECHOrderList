@@ -1,23 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ICTECHOrderList\Core\Content\OrderList;
 
 use ICTECHOrderList\Core\Content\OrderList\Aggregate\OrderListTranslation\OrderListTranslationDefinition;
+use ICTECHOrderList\Core\Content\OrderProductList\OrderProductListDefination;
+use Shopware\Core\Checkout\Customer\CustomerDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\CreatedAtField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\OneToManyAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslatedField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslationsAssociationField;
-use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
-use Shopware\Core\Checkout\Customer\CustomerDefinition;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\CreatedAtField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\UpdatedAtField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\OneToManyAssociationField;
-use ICTECHOrderList\Core\Content\OrderProductList\OrderProductListDefination;
+use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 
 class OrderListDefination extends EntityDefinition
 {
