@@ -33,7 +33,6 @@ class OrderPlacedSubscriber implements EventSubscriberInterface
         if (!$request) {
             return;
         }
-
         $session = $request->getSession();
         $orderListId = $session->get('order_list_id_to_delete');
 
