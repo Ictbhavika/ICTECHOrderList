@@ -18,7 +18,7 @@ class ProductExtension extends EntityExtension
             new OneToManyAssociationField('orderListProduct', OrderProductListDefination::class, 'order_list_product_id', 'id')
         );
     }
-  
+
     public function getEntityName(): string
     {
         return ProductDefinition::ENTITY_NAME;

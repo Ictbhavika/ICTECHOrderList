@@ -21,9 +21,7 @@ Component.register('sw-customer-detail-ict-order-list', {
             orderLists: null,
             isLoading: false,
             expandedItems: [],
-            productNames: {},
-            pagination: {},
-            pageSize: 100
+            productNames: {}
         };
     },
 
@@ -47,17 +45,17 @@ Component.register('sw-customer-detail-ict-order-list', {
                 const criteria = new Criteria(1, 50);
                 criteria.addAssociation('customer');
                 criteria.addAssociation('translations');
-                criteria.addAssociation('orderListProduct');
-                criteria.addAssociation('orderListProduct.product');
-                criteria.addAssociation('orderListProduct.product.parent');
-                criteria.addAssociation('orderListProduct.product.options.group');
+                criteria.addAssociation('products');
+                criteria.addAssociation('products.product');
+                criteria.addAssociation('products.product.parent');
+                criteria.addAssociation('products.product.options.group');
                 criteria.addFilter(Criteria.equals('customerId', this.customer.id));
                 const orderLists = await this.orderListRepository.search(criteria);
                 
                 // Preload product names
                 for (const orderList of orderLists) {
-                    if (orderList.extensions?.orderListProduct) {
-                        for (const productItem of orderList.extensions.orderListProduct) {
+                    if (orderList.products) {
+                        for (const productItem of orderList.products) {
                             if (productItem && productItem.id) {
                                 this.productNames[productItem.id] = await this.buildProductName(productItem);
                             }
@@ -86,26 +84,8 @@ Component.register('sw-customer-detail-ict-order-list', {
             return this.expandedItems.includes(id);
         },
 
-        getCurrentPage(orderListId) {
-            return this.pagination[orderListId] || 1;
-        },
-
         getPaginatedProducts(orderList) {
-            const page = this.getCurrentPage(orderList.id);
-            const start = (page - 1) * this.pageSize;
-            const end = start + this.pageSize;
-            return (orderList.extensions.orderListProduct || []).slice(start, end);
-        },
-
-        getTotalProducts(orderList) {
-            return (orderList.extensions.orderListProduct || []).length;
-        },
-
-        onPageChange(orderListId, pageData) {
-            if (pageData.limit) {
-                this.pageSize = pageData.limit;
-            }
-            this.pagination = { ...this.pagination, [orderListId]: pageData.page || pageData };
+            return orderList.products || [];
         },
 
         async buildProductName(productItem) {

@@ -9,40 +9,43 @@
 {% block page_account_main_content %}
 
 	{% block page_account_order_list %}
-		<div class="order-list-page" data-order-list-modals>
+		<div
+			class="order-list-page" data-order-list-modals>
 			<!-- Header -->
 			<div class="d-flex flex-column flex-lg-row justify-content-between align-items-stretch align-items-lg-center mb-4 gap-3">
 				<h1 class="h2 mb-0">
 					{{ "ictectechOrderList.account.orderListOverview"|trans|sw_sanitize }}
 				</h1>
 
-				<div class="d-flex flex-column flex-sm-row gap-2 w-100 w-lg-auto">
-					{% if orderLists.total > 0 %}
-					<!-- Search -->
-					<div class="flex-grow-1 flex-sm-grow-0" data-order-list-search>
-						<input type="text" class="form-control form-control-sm" placeholder="Search lists..." data-search-input>
-					</div>
-					
-					<!-- View Toggle -->
-					<div class="btn-group d-none d-md-flex" role="group" aria-label="View toggle" data-order-list-view-switcher>
-						<button type="button" class="btn btn-sm btn-outline-secondary" data-view-mode="grid" title="Grid view">
-							<svg width="16" height="16" fill="currentColor"><path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z"/></svg>
-						</button>
-						<button type="button" class="btn btn-sm btn-outline-secondary" data-view-mode="list" title="List view">
-							<svg width="16" height="16" fill="currentColor"><path d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/></svg>
-						</button>
-					</div>
-					{% endif %}
-
+				<div
+					class="d-flex flex-column flex-sm-row gap-2">
 					<!-- Create Button -->
 					<button class="btn btn-primary w-100 w-sm-auto" data-bs-toggle="modal" data-bs-target="#createOrderListModal">
 						{% sw_icon 'plus' style { size: 'sm', pack: 'solid' } %}
 						<span class="d-none d-sm-inline">{{ "ictectechOrderList.account.createOrderListBtn"|trans|sw_sanitize }}</span>
-						<span class="d-inline d-sm-none">Create</span>
 					</button>
 				</div>
 			</div>
 
+			{% if orderLists.total > 0 %}
+				<div
+					class="row mb-4 g-3">
+					<!-- Search -->
+					<div class="col-12 col-md-4" data-order-list-search>
+						<input type="text" class="form-control" placeholder="Search lists..." data-search-input>
+					</div>
+
+					<!-- View Toggle -->
+					<div class="col-12 col-md-8 d-flex gap-2 justify-content-md-end">
+						<button type="button" class="btn btn-sm btn-outline-secondary" data-view-mode="grid" title="Grid view" data-order-list-view-switcher>
+							<svg width="16" height="16" fill="currentColor"><path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z"/></svg>
+						</button>
+						<button type="button" class="btn btn-sm btn-outline-secondary" data-view-mode="list" title="List view" data-order-list-view-switcher>
+							<svg width="16" height="16" fill="currentColor"><path d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/></svg>
+						</button>
+					</div>
+				</div>
+			{% endif %}
 
 			{# EMPTY STATE #}
 			{% if orderLists.total == 0 %}
@@ -66,32 +69,38 @@
 								<span class="order-badge">{{ orderList.productCount }}</span>
 
 								<div class="dropdown order-menu">
-									<button class="btn btn-sm btn-light" data-bs-toggle="dropdown" aria-label="Actions">
-										{% sw_icon 'default-action-more' %}
+									<button class="btn btn-light btn-outline-light" data-bs-toggle="dropdown" aria-label="Actions">
+										{% sw_icon 'more-vertical' %}
 									</button>
 									<ul class="dropdown-menu dropdown-menu-end shadow-sm">
-										<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#renameModal" data-list-id="{{ orderList.id }}" data-list-name="{{ orderList.name }}">
-											{% sw_icon 'pencil' style { size: 'sm' } %}
-											{{ "ictectechOrderList.account.action.rename"|trans|sw_sanitize }}
-										</a></li>
-										<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#duplicateModal" data-list-id="{{ orderList.id }}" data-list-name="{{ orderList.name }}">
-											{% sw_icon 'copy' style { size: 'sm' } %}
-											{{ "ictectechOrderList.account.action.duplicate"|trans|sw_sanitize }}
-										</a></li>
+										<li>
+											<a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#renameModal" data-list-id="{{ orderList.id }}" data-list-name="{{ orderList.name }}">
+												{% sw_icon 'pencil' style { size: 'sm' } %}
+												{{ "ictectechOrderList.account.action.rename"|trans|sw_sanitize }}
+											</a>
+										</li>
+										<li>
+											<a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#duplicateModal" data-list-id="{{ orderList.id }}" data-list-name="{{ orderList.name }}">
+												{% sw_icon 'duplicate' style { size: 'sm' } %}
+												{{ "ictectechOrderList.account.action.duplicate"|trans|sw_sanitize }}
+											</a>
+										</li>
 										<li><hr class="dropdown-divider"></li>
-										<li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal" data-list-id="{{ orderList.id }}" data-list-name="{{ orderList.name }}">
-											{% sw_icon 'trash' style { size: 'sm' } %}
-											{{ "ictectechOrderList.account.action.delete"|trans|sw_sanitize }}
-										</a></li>
+										<li>
+											<a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal" data-list-id="{{ orderList.id }}" data-list-name="{{ orderList.name }}">
+												{% sw_icon 'trash' style { size: 'sm' } %}
+												{{ "ictectechOrderList.account.action.delete"|trans|sw_sanitize }}
+											</a>
+										</li>
 									</ul>
 								</div>
 
-								<h6 class="order-title text-truncate">{{ orderList.name }}</h6>
+								<h6 class="order-title text-truncate">{{ orderList.translated.name }}</h6>
 
 								<a href="{{ path('frontend.order-list.detail', {id: orderList.id}) }}" class="btn btn-outline-primary w-100 mt-auto">
 									<span class="d-none d-sm-inline">{{ "ictectechOrderList.account.action.openList"|trans|sw_sanitize }}</span>
 									<span class="d-inline d-sm-none">Open</span>
-									{% sw_icon 'arrow-medium-right' style {'size': 'xs'} %}
+									{% sw_icon 'arrow-right' style {'size': 'xs'} %}
 								</a>
 							</div>
 						</div>
@@ -100,11 +109,11 @@
 
 				<!-- Pagination -->
 				{% if orderLists.total > 12 %}
-				<div class="mt-4 d-flex justify-content-center">
-					{% sw_include '@Storefront/storefront/component/pagination.html.twig' with {
+					<div class="mt-4 d-flex justify-content-center">
+						{% sw_include '@Storefront/storefront/component/pagination.html.twig' with {
                 entities: orderLists
             } %}
-				</div>
+					</div>
 				{% endif %}
 
 			{% endif %}
@@ -172,7 +181,8 @@
 					<form action="{{ path('frontend.order-list.delete') }}" method="post">
 						<div class="modal-body">
 							<input type="hidden" name="listId" id="deleteListId">
-							<p>{{ "ictectechOrderList.account.modal.delete.message"|trans|sw_sanitize }} <strong id="deleteListName"></strong>?</p>
+							<p>{{ "ictectechOrderList.account.modal.delete.message"|trans|sw_sanitize }}
+								<strong id="deleteListName"></strong>?</p>
 							<p class="text-muted small">{{ "ictectechOrderList.account.modal.delete.warning"|trans|sw_sanitize }}</p>
 						</div>
 						<div class="modal-footer">

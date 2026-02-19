@@ -17,10 +17,53 @@
             "updated": "Aktualisiert:",
             "openList": "Liste öffnen",
             "addAllToCart": "Alle in den Warenkorb",
+            "action": {
+                "rename": "Umbenennen",
+                "duplicate": "Duplizieren",
+                "delete": "Löschen",
+                "openList": "Liste öffnen"
+            },
+            "modal": {
+                "cancel": "Abbrechen",
+                "rename": {
+                    "title": "Liste umbenennen",
+                    "label": "Neuer Name",
+                    "submit": "Umbenennen"
+                },
+                "duplicate": {
+                    "title": "Liste duplizieren",
+                    "label": "Name für Kopie",
+                    "submit": "Duplizieren"
+                },
+                "delete": {
+                    "title": "Liste löschen",
+                    "message": "Möchten Sie wirklich löschen",
+                    "warning": "Diese Aktion kann nicht rückgängig gemacht werden.",
+                    "submit": "Löschen"
+                }
+            },
             "emptyState": {
                 "title": "Noch keine Bestelllisten",
                 "description": "Erstellen Sie Ihre erste Liste, um Produkte für später zu speichern.",
                 "button": "Bestelliste erstellen"
+            }
+        },
+        "detail": {
+            "backToLists": "Zurück zu Listen",
+            "searchTitle": "Produkte suchen",
+            "searchPlaceholder": "Produkte suchen...",
+            "csvTitle": "CSV-Upload",
+            "uploadCsv": "CSV hochladen",
+            "addAllToCart": "Alle in den Warenkorb",
+            "columnProduct": "Produkt",
+            "columnActions": "Aktionen",
+            "grandTotal": "Gesamtsumme",
+            "emptyList": "Keine Produkte in dieser Liste",
+            "modal": {
+                "removeTitle": "Produkt entfernen",
+                "removeMessage": "Möchten Sie dieses Produkt wirklich aus der Liste entfernen?",
+                "cancel": "Abbrechen",
+                "remove": "Entfernen"
             }
         }
     }

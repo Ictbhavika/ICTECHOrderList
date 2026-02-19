@@ -7,6 +7,7 @@ namespace ICTECHOrderList\Core\Content\OrderList\Aggregate\OrderListTranslation;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
 
 /**
+ * @extends EntityCollection<OrderListTranslationEntity>
  * @method void                              add(OrderListTranslationEntity $entity)
  * @method void                              set(string $key, OrderListTranslationEntity $entity)
  * @method OrderListTranslationEntity[]      getIterator()
