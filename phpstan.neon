@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 includes:
 	- phpstan-baseline.neon
 
@@ -36,3 +37,15 @@ parameters:
 		- '#^Parameter \#1 \$key of method .*::get\(\) expects .*, mixed given#'
 	bootstrapFiles:
 		- ../../../vendor/autoload.php
+=======
+parameters:
+    level: 9
+    paths:
+        - src
+    excludePaths:
+        - src/Resources
+        - src/Storefront
+    reportUnmatchedIgnoredErrors: false
+includes:
+    - phpstan-baseline.neon
+>>>>>>> fe6ade7 (code standard and design and price issue solve)

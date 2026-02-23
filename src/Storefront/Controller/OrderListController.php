@@ -207,9 +207,7 @@ class OrderListController extends StorefrontController
             } else {
                 $this->addFlash(self::SUCCESS, "Order list '{$orderListName}' created successfully.");
             }
-
             return $this->redirectToRoute('frontend.order-list.detail', ['id' => $orderListId]);
-
         } catch (\Exception $e) {
             $this->addFlash(self::DANGER, 'Error creating order list: ' . $e->getMessage());
             return $this->redirectToRoute('frontend.account.order-list.page');
@@ -535,7 +533,6 @@ class OrderListController extends StorefrontController
     #[Route(path: '/order-list/{id}/add-all-to-cart', name: 'frontend.order-list.add-all-to-cart', defaults: ['_loginRequired' => true, 'XmlHttpRequest' => true, '_noStore' => true], methods: ['POST'])]
     public function addAllToCart(string $id, SalesChannelContext $context): Response
     {
-
         $criteria = new Criteria([$id]);
         $criteria->addAssociation('orderListProduct');
         $orderList = $this->orderListRepository->search($criteria, $context->getContext())->first();

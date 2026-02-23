@@ -12,6 +12,7 @@
             "csvImport": "CSV-Import",
             "csvDownloadDemo": "Demo-CSV herunterladen",
             "searchProductLabel": "Suchen Sie nach Name oder SKU...",
+            "product": "Produkt",
             "products": "Produkte",
             "created": "Erstellt:",
             "updated": "Aktualisiert:",

@@ -1,149 +1,35 @@
 .order-list-page {
-    .order-grid {
-        row-gap: 1rem;
+    .order-list-container {
+        display: grid;
+        gap: 1rem;
         
-        @media (min-width: 768px) {
-            row-gap: 1.5rem;
+        &.view-grid {
+            grid-template-columns: 1fr;
+            
+            @media (min-width: 576px) {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            @media (min-width: 992px) {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            @media (min-width: 1200px) {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        &.view-list {
+            grid-template-columns: 1fr;
         }
     }
 
-    .order-card {
-        background: #fff;
-        border-radius: 12px;
-        padding: 1.25rem;
-        border: 1px solid #e9ecef;
-        transition: all 0.25s ease;
-        min-height: 140px;
-
-        @media (min-width: 768px) {
-            border-radius: 14px;
-            padding: 1.5rem;
-        }
+    .card {
+        transition: all 0.2s;
 
         &:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-        }
-    }
-
-    .order-title {
-        font-weight: 600;
-        font-size: 0.95rem;
-        margin-bottom: 1rem;
-        
-        @media (min-width: 768px) {
-            font-size: 1rem;
-        }
-    }
-
-    .order-badge {
-        position: absolute;
-        top: 12px;
-        right: 45px;
-        background: #0d6efd;
-        color: #fff;
-        font-size: 0.7rem;
-        padding: 4px 8px;
-        border-radius: 50px;
-        font-weight: 600;
-        
-        @media (min-width: 768px) {
-            top: 15px;
-            right: 50px;
-            font-size: 0.75rem;
-            padding: 5px 10px;
-        }
-    }
-
-    .order-menu {
-        position: absolute;
-        top: 8px;
-        right: 8px;
-
-        @media (min-width: 768px) {
-            top: 10px;
-            right: 10px;
-        }
-
-        .btn {
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            
-            @media (min-width: 768px) {
-                width: 32px;
-                height: 32px;
-            }
-        }
-
-        .dropdown-menu {
-            border-radius: 10px;
-            border: 1px solid #eee;
-            padding: 0.5rem 0;
-            min-width: 180px;
-        }
-
-        .dropdown-item {
-            font-size: 0.85rem;
-            padding: 0.5rem 1rem;
-            transition: background 0.2s;
-
-            @media (min-width: 768px) {
-                font-size: 0.9rem;
-                padding: 0.6rem 1rem;
-            }
-
-            &:hover {
-                background-color: #f8f9fa;
-            }
-        }
-    }
-
-    [data-order-list-container].view-list {
-        .col-12,
-        .col-sm-6,
-        .col-lg-4,
-        .col-xl-3 {
-            max-width: 100%;
-            flex: 0 0 100%;
-        }
-
-        .order-card {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 1rem;
-            
-            @media (min-width: 768px) {
-                gap: 2rem;
-            }
-
-            .order-title {
-                margin-bottom: 0;
-                flex: 1;
-            }
-
-            .btn {
-                min-width: 120px;
-                margin-top: 0 !important;
-                
-                @media (min-width: 768px) {
-                    min-width: 150px;
-                }
-            }
-
-            .order-badge {
-                position: static;
-                margin-left: 0.5rem;
-                
-                @media (min-width: 768px) {
-                    margin-left: 1rem;
-                }
-            }
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
         }
     }
 }

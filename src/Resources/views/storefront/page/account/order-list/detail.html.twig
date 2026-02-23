@@ -114,9 +114,19 @@
 										</div>
 									</td>
 									<td class="text-end" id="unit-price-{{ item.id }}" data-label="{{ 'checkout.cartHeaderUnitPrice'|trans|sw_sanitize }}">
+
 										{% if item.product and item.product.calculatedPrice %}
-											{{ item.product.calculatedPrice.unitPrice|currency }}
 											{% set unitPrice = item.product.calculatedPrice.unitPrice %}
+											{% if item.product.calculatedPrices|length > 1 %}
+												{% set unitPrice = item.product.calculatedPrices|first.unitPrice %}
+												{% for price in item.product.calculatedPrices|reverse %}
+													{% if item.qty >= price.quantity %}
+														{% set unitPrice = price.unitPrice %}
+														{% break %}
+													{% endif %}
+												{% endfor %}
+											{% endif %}
+											{{ unitPrice|currency }}
 											{% set total = unitPrice * item.qty %}
 											{% set grandTotal = grandTotal + total %}
 										{% else %}

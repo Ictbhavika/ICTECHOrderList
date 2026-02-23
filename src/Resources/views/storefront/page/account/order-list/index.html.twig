@@ -59,60 +59,60 @@
 						</button>
 					</div>
 				</div>
+				
 			{% else %}
 
 				<!-- GRID -->
-				<div class="row order-grid" data-order-list-container>
+				<div class="order-list-container view-grid" data-order-list-container>
+
 					{% for orderList in orderLists %}
-						<div class="col-12 col-sm-6 col-lg-4 col-xl-3 mb-3 mb-md-4" data-search-item>
-							<div class="order-card position-relative h-100 d-flex flex-column">
-								<span class="order-badge">{{ orderList.productCount }}</span>
-
-								<div class="dropdown order-menu">
-									<button class="btn btn-light btn-outline-light" data-bs-toggle="dropdown" aria-label="Actions">
-										{% sw_icon 'more-vertical' %}
-									</button>
-									<ul class="dropdown-menu dropdown-menu-end shadow-sm">
-										<li>
-											<a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#renameModal" data-list-id="{{ orderList.id }}" data-list-name="{{ orderList.name }}">
-												{% sw_icon 'pencil' style { size: 'sm' } %}
-												{{ "ictectechOrderList.account.action.rename"|trans|sw_sanitize }}
-											</a>
-										</li>
-										<li>
-											<a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#duplicateModal" data-list-id="{{ orderList.id }}" data-list-name="{{ orderList.name }}">
-												{% sw_icon 'duplicate' style { size: 'sm' } %}
-												{{ "ictectechOrderList.account.action.duplicate"|trans|sw_sanitize }}
-											</a>
-										</li>
-										<li><hr class="dropdown-divider"></li>
-										<li>
-											<a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal" data-list-id="{{ orderList.id }}" data-list-name="{{ orderList.name }}">
-												{% sw_icon 'trash' style { size: 'sm' } %}
-												{{ "ictectechOrderList.account.action.delete"|trans|sw_sanitize }}
-											</a>
-										</li>
-									</ul>
+						<div class="order-item" data-search-item>
+							<div class="order-list-card">
+								<div class="order-list-header">
+									<h5 class="order-list-title">{{ orderList.translated.name }}</h5>
+									<span class="order-list-badge">
+										{{ orderList.productCount }}
+										{% if orderList.productCount == 1 %}
+											{{ "ictectechOrderList.account.product"|trans|sw_sanitize }}
+										{% else %}
+											{{ "ictectechOrderList.account.products"|trans|sw_sanitize }}
+										{% endif %}
+									</span>
 								</div>
-
-								<h6 class="order-title text-truncate">{{ orderList.translated.name }}</h6>
-
-								<a href="{{ path('frontend.order-list.detail', {id: orderList.id}) }}" class="btn btn-outline-primary w-100 mt-auto">
-									<span class="d-none d-sm-inline">{{ "ictectechOrderList.account.action.openList"|trans|sw_sanitize }}</span>
-									<span class="d-inline d-sm-none">Open</span>
-									{% sw_icon 'arrow-right' style {'size': 'xs'} %}
-								</a>
+								<div class="order-list-body">
+									<div class="d-flex align-items-center text-muted small mb-3">
+										<span class="me-2">{% sw_icon 'calendar' style { size: 'xs' } %}</span>
+										<span>{{ orderList.createdAt|date('d M Y H:i') }}</span>
+									</div>
+									<div class="order-list-actions">
+										<a href="{{ path('frontend.order-list.detail', {id: orderList.id}) }}" class="btn btn-sm btn-outline-primary flex-grow-1">
+											Open
+										</a>
+										<div class="dropdown">
+											<button class="btn btn-sm btn-light" data-bs-toggle="dropdown">
+												{% sw_icon 'more-vertical' style { size: 'xs' } %}
+											</button>
+											<ul class="dropdown-menu dropdown-menu-end shadow-sm">
+												<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#renameModal" data-list-id="{{ orderList.id }}" data-list-name="{{ orderList.translated.name }}">Rename</a></li>
+												<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#duplicateModal" data-list-id="{{ orderList.id }}" data-list-name="{{ orderList.translated.name }}">Duplicate</a></li>
+												<li><hr class="dropdown-divider"></li>
+												<li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal" data-list-id="{{ orderList.id }}" data-list-name="{{ orderList.translated.name }}">Delete</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					{% endfor %}
-				</div>
 
+				</div>
+				
 				<!-- Pagination -->
-				{% if orderLists.total > 12 %}
+				{% if orderLists.total > 5 %}
 					<div class="mt-4 d-flex justify-content-center">
 						{% sw_include '@Storefront/storefront/component/pagination.html.twig' with {
-                entities: orderLists
-            } %}
+							entities: orderLists
+						} %}
 					</div>
 				{% endif %}
 
