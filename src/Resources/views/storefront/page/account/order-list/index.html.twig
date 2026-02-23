@@ -69,7 +69,20 @@
 						<div class="order-item" data-search-item>
 							<div class="order-list-card">
 								<div class="order-list-header">
-									<h5 class="order-list-title">{{ orderList.translated.name }}</h5>
+								
+									{% set displayName = '' %}
+									{% set currentLanguageId = app.request.attributes.get('sw-sales-channel-context').context.languageId %}
+									{% if orderList.translations %}
+										{% for translation in orderList.translations %}
+											{% if translation.languageId == currentLanguageId %}
+												{% set displayName = translation.name %}
+											{% endif %}
+										{% endfor %}
+									{% endif %}
+									{% if displayName == '' and orderList.translations|first %}
+										{% set displayName = orderList.translations|first.name %}
+									{% endif %}
+									<h5 class="order-list-title">{{ displayName }}</h5>
 									<span class="order-list-badge">
 										{{ orderList.productCount }}
 										{% if orderList.productCount == 1 %}
@@ -93,10 +106,10 @@
 												{% sw_icon 'more-vertical' style { size: 'xs' } %}
 											</button>
 											<ul class="dropdown-menu dropdown-menu-end shadow-sm">
-												<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#renameModal" data-list-id="{{ orderList.id }}" data-list-name="{{ orderList.translated.name }}">Rename</a></li>
-												<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#duplicateModal" data-list-id="{{ orderList.id }}" data-list-name="{{ orderList.translated.name }}">Duplicate</a></li>
+												<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#renameModal" data-list-id="{{ orderList.id }}" data-list-name="{{ displayName }}">Rename</a></li>
+												<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#duplicateModal" data-list-id="{{ orderList.id }}" data-list-name="{{ displayName }}">Duplicate</a></li>
 												<li><hr class="dropdown-divider"></li>
-												<li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal" data-list-id="{{ orderList.id }}" data-list-name="{{ orderList.translated.name }}">Delete</a></li>
+												<li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal" data-list-id="{{ orderList.id }}" data-list-name="{{ displayName }}">Delete</a></li>
 											</ul>
 										</div>
 									</div>

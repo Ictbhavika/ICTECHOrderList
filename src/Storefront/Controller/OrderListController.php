@@ -39,6 +39,7 @@ class OrderListController extends StorefrontController
         $criteria = new Criteria();
         $criteria->addFilter(new EqualsAnyFilter('customerId', [$customerId]));
         $criteria->addAssociation('orderListProduct');
+        $criteria->addAssociation('translations');
         $criteria->setLimit($limit);
         $criteria->setOffset(($page - 1) * $limit);
         $criteria->setTotalCountMode(Criteria::TOTAL_COUNT_MODE_EXACT);
@@ -75,7 +76,7 @@ class OrderListController extends StorefrontController
     {
         $orderListName = trim((string) $request->request->get('orderListName', ''));
         $csvFile = $request->files->get('csvFile');
-
+        dd($orderListName);
         if ($orderListName === '') {
             $this->addFlash(self::DANGER, 'Order list name is required');
             return $this->redirectToRoute('frontend.account.order-list.page');
@@ -409,6 +410,7 @@ class OrderListController extends StorefrontController
 
         $criteria = new Criteria([$id]);
         $criteria->addAssociation('orderListProduct');
+        $criteria->addAssociation('translations');
         $orderList = $this->orderListRepository->search($criteria, $context->getContext())->first();
 
         if (!$orderList) {
@@ -462,17 +464,19 @@ class OrderListController extends StorefrontController
     {
         $listId = $request->request->get('listId');
         $name = trim((string) $request->request->get('name'));
-
         if ($name === '') {
             $this->addFlash(self::DANGER, 'Name is required');
             return $this->redirectToRoute('frontend.account.order-list.page');
         }
 
         try {
-            $this->orderListRepository->update([['id' => $listId, 'name' => $name]], $context->getContext());
+            $sk = $this->orderListRepository->update([[
+                'id' => $listId,
+                'name' => $name
+            ]], $context->getContext());
             $this->addFlash(self::SUCCESS, 'List renamed successfully');
         } catch (\Exception $e) {
-            $this->addFlash(self::DANGER, 'Failed to rename list');
+            $this->addFlash(self::DANGER, 'Failed to rename list: ' . $e->getMessage());
         }
 
         return $this->redirectToRoute('frontend.account.order-list.page');

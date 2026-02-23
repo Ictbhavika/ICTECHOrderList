@@ -13,7 +13,19 @@
 			<span style="display: inline-flex;">{% sw_icon 'arrow-head-left' style {size: 'xs'} %}</span>
 			<span>{{ "ictectechOrderList.detail.backToLists"|trans|sw_sanitize }}</span>
 		</a>
-		<h1>{{ orderList.name ?? orderList.translated.name }}</h1>
+		{% set displayName = '' %}
+		{% set currentLanguageId = app.request.attributes.get('sw-sales-channel-context').context.languageId %}
+		{% if orderList.translations %}
+			{% for translation in orderList.translations %}
+				{% if translation.languageId == currentLanguageId %}
+					{% set displayName = translation.name %}
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+		{% if displayName == '' and orderList.translations|first %}
+			{% set displayName = orderList.translations|first.name %}
+		{% endif %}
+		<h1>{{ displayName }}</h1>
 	</div>
 
 	<div class="card order-list-search-card mb-3">
