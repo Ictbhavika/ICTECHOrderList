@@ -13,7 +13,8 @@
 			{% sw_icon 'arrow-head-left' style {size: 'xs'} %}
 			{{ "ictectechOrderList.detail.backToLists"|trans|sw_sanitize }}
 		</a>
-		<h1>{{ orderList.name }}</h1>
+		{{ dump(orderList)}}
+		<h1>{{ orderList.name ?? orderList.translated.name }}</h1>
 	</div>
 
 	<div class="card order-list-search-card mb-3">
