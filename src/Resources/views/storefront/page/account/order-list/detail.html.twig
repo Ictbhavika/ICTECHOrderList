@@ -1,97 +1,104 @@
-{% sw_extends '@Storefront/storefront/page/account/_page.html.twig' %} 
+{% sw_extends '@Storefront/storefront/page/account/_page.html.twig' %}
 
 {% block base_flashbags %}
-	<div data-flash-message>
-		{{ parent() }}
-	</div>
+	{{ parent() }}
 {% endblock %}
 
 {% block page_account_main_content %}
-<div class="order-list-detail">
-	<div class="order-list-header account-welcome mb-4">
-		<a href="{{ path('frontend.account.order-list.page') }}" class="btn btn-sm btn-outline-secondary mb-2" >
-			<span style="display: inline-flex;">{% sw_icon 'arrow-head-left' style {size: 'xs'} %}</span>
-			<span>{{ "ictectechOrderList.detail.backToLists"|trans|sw_sanitize }}</span>
-		</a>
-		{% set displayName = '' %}
-		{% set currentLanguageId = app.request.attributes.get('sw-sales-channel-context').context.languageId %}
-		{% if orderList.translations %}
-			{% for translation in orderList.translations %}
-				{% if translation.languageId == currentLanguageId %}
-					{% set displayName = translation.name %}
-				{% endif %}
-			{% endfor %}
-		{% endif %}
-		{% if displayName == '' and orderList.translations|first %}
-			{% set displayName = orderList.translations|first.name %}
-		{% endif %}
-		<h1>{{ displayName }}</h1>
-	</div>
+	<div class="order-list-detail">
+		<div class="order-list-header account-welcome mb-4">
+			<a href="{{ path('frontend.account.order-list.page') }}" class="btn btn-sm btn-outline-secondary mb-2">
+				<span style="display: inline-flex;">{% sw_icon 'arrow-head-left' style {size: 'xs'} %}</span>
+				<span>{{ "ictectechOrderList.detail.backToLists"|trans|sw_sanitize }}</span>
+			</a>
+			{% set displayName = '' %}
+			{% set currentLanguageId = app.request.attributes.get('sw-sales-channel-context').context.languageId %}
+			{% if orderList.translations %}
+				{% for translation in orderList.translations %}
+					{% if translation.languageId == currentLanguageId %}
+						{% set displayName = translation.name %}
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+			{% if displayName == '' and orderList.translations|first %}
+				{% set displayName = orderList.translations|first.name %}
+			{% endif %}
+			<h1>{{ displayName }}</h1>
+		</div>
 
-	<div class="card order-list-search-card mb-3">
-		<div class="card-body">
-			<div class="row">
-				<div class="col-12 col-md-8">
-					<div class="order-list-section-title fw-bold fs-4 mb-2">
-						{{ "ictectechOrderList.detail.searchTitle"|trans|sw_sanitize }}
+		<div class="card order-list-search-card mb-3">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-12 col-md-8">
+						<div class="order-list-section-title fw-bold fs-4 mb-2">
+							{{ "ictectechOrderList.detail.searchTitle"|trans|sw_sanitize }}
+						</div>
+						<div class="order-list-search-wrapper">
+							<div class="input-group" data-order-list-search>
+								<input type="search" class="form-control border border-end-0" autocomplete="off" placeholder="{{ 'ictectechOrderList.detail.searchPlaceholder'|trans|sw_sanitize }}" data-search-input>
+								<button type="button" class="btn btn-outline-secondary border border-start-0">
+									{% sw_icon 'search' %}
+								</button>
+							</div>
+						</div>
 					</div>
-					<div class="order-list-search-wrapper">
-						<div class="input-group" data-order-list-search>
-							<input type="search" class="form-control border border-end-0" autocomplete="off" placeholder="{{ 'ictectechOrderList.detail.searchPlaceholder'|trans|sw_sanitize }}" data-search-input>
-							<button type="button" class="btn btn-outline-secondary border border-start-0">
-								{% sw_icon 'search' %}
+					<div class="col-12 col-md-4 mt-4 mt-md-0">
+						<div class="order-list-section-title fw-bold fs-4 mb-2">
+							{{ "ictectechOrderList.detail.csvTitle"|trans|sw_sanitize }}
+						</div>
+						<div data-order-list-csv-upload data-upload-url="{{ path('frontend.order-list.upload', {id: orderList.id}) }}">
+							<input type="file" data-csv-upload-input accept=".csv" style="display:none">
+							<button class="btn btn-secondary w-100" data-csv-upload-trigger>
+								<svg width="16" height="16" fill="currentColor" class="me-1"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/></svg>
+								{{ "ictectechOrderList.detail.uploadCsv"|trans|sw_sanitize }}
 							</button>
 						</div>
 					</div>
 				</div>
-				<div class="col-12 col-md-4 mt-4 mt-md-0">
-					<div class="order-list-section-title fw-bold fs-4 mb-2">
-						{{ "ictectechOrderList.detail.csvTitle"|trans|sw_sanitize }}
-					</div>
-					<div data-order-list-csv-upload data-upload-url="{{ path('frontend.order-list.upload', {id: orderList.id}) }}">
-						<input type="file" data-csv-upload-input accept=".csv" style="display:none">
-						<button class="btn btn-secondary w-100" data-csv-upload-trigger>
-							<svg width="16" height="16" fill="currentColor" class="me-1"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/></svg>
-							{{ "ictectechOrderList.detail.uploadCsv"|trans|sw_sanitize }}
-						</button>
-					</div>
-				</div>
 			</div>
 		</div>
-	</div>
 
-	<form action="{{ path('frontend.checkout.line-item.add') }}" method="post" data-add-to-cart="true">
-		<input type="hidden" name="redirectTo" value="frontend.checkout.cart.page">
-		<input type="hidden" name="orderListId" value="{{ orderList.id }}">
-		
 		<div class="card order-list-products-card" data-order-list-quantity data-update-url="{{ path('frontend.order-list.product.update-qty') }}">
 			{% if orderList.extensions.orderListProduct %}
 				{% set grandTotal = 0 %}
 				<div class="card-body">
-					<div class="order-list-products-table mb-3">
-						<div class="table-responsive">
-							<table class="table table-hover mb-0">
-								<thead class="table-light">
-									<tr>
-										<th>{{ "ictectechOrderList.detail.columnProduct"|trans|sw_sanitize }}</th>
-										<th class="text-center">{{ "checkout.cartHeaderQuantity"|trans|sw_sanitize }}</th>
-										<th class="text-end">{{ "checkout.cartHeaderUnitPrice"|trans|sw_sanitize }}</th>
-										<th class="text-end">{{ "checkout.cartHeaderTotalPrice"|trans|sw_sanitize }}</th>
-										<th class="text-end">{{ "ictectechOrderList.detail.columnActions"|trans|sw_sanitize }}</th>
-									</tr>
-								</thead>
-								<tbody>
-									{% for item in orderList.extensions.orderListProduct %}
-										<tr data-item-id="{{ item.id }}" data-search-item>
-									<td data-label="{{ 'ictectechOrderList.detail.columnProduct'|trans|sw_sanitize }}">
-										<input type="hidden" name="lineItems[{{ item.product.id }}][id]" value="{{ item.product.id }}">
-										<input type="hidden" name="lineItems[{{ item.product.id }}][type]" value="product">
-										<input type="hidden" name="lineItems[{{ item.product.id }}][referencedId]" value="{{ item.product.id }}">
-										<input type="hidden" name="lineItems[{{ item.product.id }}][quantity]" value="{{ item.qty }}" data-quantity-hidden="{{ item.product.id }}">
-										<div class="d-flex align-items-center">
-											{% if item.product and item.product.cover %}
-												<a href="{{ seoUrl('frontend.detail.page', {'productId': item.product.id}) }}" class="me-3">
-													{% sw_thumbnails 'product-image' with {
+					<form action="{{ path('frontend.order-list.product.bulk-delete') }}" method="post" data-bulk-delete-form data-order-list-bulk-delete>
+						<input type="hidden" name="orderListId" value="{{ orderList.id }}">
+						<div class="d-flex justify-content-between align-items-center mb-3">
+							<div>
+								<span class="text-muted" data-selected-count>0 selected</span>
+							</div>
+							<button type="button" class="btn btn-sm btn-danger" data-bulk-remove-btn disabled>
+								{% sw_icon 'trash' style {'size': 'sm'} %}
+								Remove Selected
+							</button>
+						</div>
+						<div class="order-list-products-table mb-3">
+							<div class="table-responsive">
+								<table class="table table-hover mb-0">
+									<thead class="table-light">
+										<tr>
+											<th style="width: 40px;">
+												<input type="checkbox" class="form-check-input" data-select-all>
+											</th>
+											<th>{{ "ictectechOrderList.detail.columnProduct"|trans|sw_sanitize }}</th>
+											<th class="text-center">{{ "checkout.cartHeaderQuantity"|trans|sw_sanitize }}</th>
+											<th class="text-end">{{ "checkout.cartHeaderUnitPrice"|trans|sw_sanitize }}</th>
+											<th class="text-end">{{ "checkout.cartHeaderTotalPrice"|trans|sw_sanitize }}</th>
+											<th class="text-end">{{ "ictectechOrderList.detail.columnActions"|trans|sw_sanitize }}</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for item in orderList.extensions.orderListProduct %}
+											<tr data-item-id="{{ item.id }}" data-search-item>
+												<td>
+													<input type="checkbox" class="form-check-input" name="itemIds[]" value="{{ item.id }}" data-product-checkbox>
+												</td>
+												<td data-label="{{ 'ictectechOrderList.detail.columnProduct'|trans|sw_sanitize }}">
+													<div class="d-flex align-items-center">
+														{% if item.product and item.product.cover %}
+															<a href="{{ seoUrl('frontend.detail.page', {'productId': item.product.id}) }}" class="me-3">
+																{% sw_thumbnails 'product-image' with {
 														media: item.product.cover.media,
 														sizes: {'default': '60px'},
 														attributes: {
@@ -100,101 +107,121 @@
 															'style': 'width: 60px; height: 60px; object-fit: cover;'
 														}
 													} %}
-												</a>
-											{% endif %}
-											<div>
-												{% if item.product %}
-													<a href="{{ seoUrl('frontend.detail.page', {'productId': item.product.id}) }}" class="text-decoration-none">
-														{{ item.product.translated.name }}
-													</a>
-												{% else %}
-													{{ item.productNumber }}
-												{% endif %}
-												<div class="small text-muted">{{ "checkout.cartItemInfoId"|trans|sw_sanitize }} {{ item.productNumber }}</div>
-											</div>
-										</div>
-									</td>
-									<td class="text-center" data-label="{{ 'checkout.cartHeaderQuantity'|trans|sw_sanitize }}">
-										<div class="input-group input-group-sm" style="width: 120px; margin: 0 auto;" data-order-list-qty data-product-id="{{ item.product.id }}">
-											<button type="button" class="btn btn-outline-secondary border border-end-0 btn-minus">
-												{% sw_icon 'minus' style {size: 'xs'} %}
-											</button>
-											<input type="number" class="form-control text-center quantity-selector-group-input border border-start-0 border-end-0" value="{{ item.qty }}" min="1" id="qty-{{ item.id }}">
-											<button type="button" class="btn btn-outline-secondary border border-start-0 btn-plus">
-												{% sw_icon 'plus' style {size: 'xs'} %}
-											</button>
-										</div>
-									</td>
-									<td class="text-end" id="unit-price-{{ item.id }}" data-label="{{ 'checkout.cartHeaderUnitPrice'|trans|sw_sanitize }}">
+															</a>
+														{% endif %}
+														<div>
+															{% if item.product %}
+																{% set productName = item.product.translated.name %}
+																{% if item.product.parentId %}
+																	{% if item.product.options %}
+																		{% for option in item.product.options %}
+																			{% set productName = productName ~ ' - ' ~ option.translated.name %}
+																		{% endfor %}
+																	{% endif %}
+																{% endif %}
+																<a href="{{ seoUrl('frontend.detail.page', {'productId': item.product.id}) }}" class="text-decoration-none">
+																	{{ productName }}
+																</a>
+															{% else %}
+																{{ item.productNumber }}
+															{% endif %}
+															<div class="small text-muted">{{ "checkout.cartItemInfoId"|trans|sw_sanitize }}
+																{{ item.productNumber }}</div>
+														</div>
+													</div>
+												</td>
+												<td class="text-center" data-label="{{ 'checkout.cartHeaderQuantity'|trans|sw_sanitize }}">
+													<div class="input-group input-group-sm" style="width: 120px; margin: 0 auto;" data-order-list-qty data-product-id="{{ item.product.id }}">
+														<button type="button" class="btn btn-outline-secondary border border-end-0 btn-minus">
+															{% sw_icon 'minus' style {size: 'xs'} %}
+														</button>
+														<input type="number" class="form-control text-center quantity-selector-group-input border border-start-0 border-end-0" value="{{ item.qty }}" min="1" id="qty-{{ item.id }}">
+														<button type="button" class="btn btn-outline-secondary border border-start-0 btn-plus">
+															{% sw_icon 'plus' style {size: 'xs'} %}
+														</button>
+													</div>
+												</td>
+												<td class="text-end" id="unit-price-{{ item.id }}" data-label="{{ 'checkout.cartHeaderUnitPrice'|trans|sw_sanitize }}">
 
-										{% if item.product and item.product.calculatedPrice %}
-											{% set unitPrice = item.product.calculatedPrice.unitPrice %}
-											{% if item.product.calculatedPrices|length > 1 %}
-												{% set unitPrice = item.product.calculatedPrices|first.unitPrice %}
-												{% for price in item.product.calculatedPrices|reverse %}
-													{% if item.qty >= price.quantity %}
-														{% set unitPrice = price.unitPrice %}
-														{% break %}
+													{% if item.product and item.product.calculatedPrice %}
+														{% set unitPrice = item.product.calculatedPrice.unitPrice %}
+														{% if item.product.calculatedPrices|length > 1 %}
+															{% set unitPrice = item.product.calculatedPrices|first.unitPrice %}
+															{% for price in item.product.calculatedPrices|reverse %}
+																{% if item.qty >= price.quantity %}
+																	{% set unitPrice = price.unitPrice %}
+																	{% break %}
+																{% endif %}
+															{% endfor %}
+														{% endif %}
+														{{ unitPrice|currency }}
+														{% set total = unitPrice * item.qty %}
+														{% set grandTotal = grandTotal + total %}
+													{% else %}
+														-
 													{% endif %}
-												{% endfor %}
-											{% endif %}
-											{{ unitPrice|currency }}
-											{% set total = unitPrice * item.qty %}
-											{% set grandTotal = grandTotal + total %}
-										{% else %}
-											-
-										{% endif %}
-									</td>
-									<td class="text-end fw-bold" id="total-{{ item.id }}" data-label="{{ 'checkout.cartHeaderTotalPrice'|trans|sw_sanitize }}">
-										{% if item.product and item.product.calculatedPrice %}
-											{{ total|currency }}
-										{% else %}
-											-
-										{% endif %}
-									</td>
-									<td class="text-end" data-label="{{ 'ictectechOrderList.detail.columnActions'|trans|sw_sanitize }}">
-										<button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal{{ item.id }}" title="{{ 'checkout.removeLineItem'|trans|striptags }}">
-											{% sw_icon 'x' style {'size': 'sm'} %}
-										</button>
-										<div class="modal fade" id="deleteModal{{ item.id }}" tabindex="-1">
-											<div class="modal-dialog modal-dialog-centered">
-												<div class="modal-content">
-													<div class="modal-header">
-														<h5 class="modal-title">{{ "ictectechOrderList.detail.modal.removeTitle"|trans|sw_sanitize }}</h5>
-														<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+												</td>
+												<td class="text-end fw-bold" id="total-{{ item.id }}" data-label="{{ 'checkout.cartHeaderTotalPrice'|trans|sw_sanitize }}">
+													{% if item.product and item.product.calculatedPrice %}
+														{{ total|currency }}
+													{% else %}
+														-
+													{% endif %}
+												</td>
+												<td class="text-end" data-label="{{ 'ictectechOrderList.detail.columnActions'|trans|sw_sanitize }}">
+													<button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal{{ item.id }}" title="{{ 'checkout.removeLineItem'|trans|striptags }}">
+														{% sw_icon 'x' style {'size': 'sm'} %}
+													</button>
+													<div class="modal fade" id="deleteModal{{ item.id }}" tabindex="-1">
+														<div class="modal-dialog modal-dialog-centered">
+															<div class="modal-content">
+																<div class="modal-header">
+																	<h5 class="modal-title">{{ "ictectechOrderList.detail.modal.removeTitle"|trans|sw_sanitize }}</h5>
+																	<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+																</div>
+																<div class="modal-body">
+																	{{ "ictectechOrderList.detail.modal.removeMessage"|trans|sw_sanitize }}
+																</div>
+																<div class="modal-footer">
+																	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ "ictectechOrderList.detail.modal.cancel"|trans|sw_sanitize }}</button>
+																	<form method="POST" action="{{ path('frontend.order-list.product.delete', {itemId: item.id}) }}" style="display:inline;">
+																		<button type="submit" class="btn btn-danger">{{ "ictectechOrderList.detail.modal.remove"|trans|sw_sanitize }}</button>
+																	</form>
+																</div>
+															</div>
+														</div>
 													</div>
-													<div class="modal-body">
-														{{ "ictectechOrderList.detail.modal.removeMessage"|trans|sw_sanitize }}
-													</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ "ictectechOrderList.detail.modal.cancel"|trans|sw_sanitize }}</button>
-														<form method="POST" action="{{ path('frontend.order-list.product.delete', {itemId: item.id}) }}" style="display:inline;">
-															<button type="submit" class="btn btn-danger">{{ "ictectechOrderList.detail.modal.remove"|trans|sw_sanitize }}</button>
-														</form>
-													</div>
-												</div>
-											</div>
-										</div>
-									</td>
+												</td>
+											</tr>
+										{% endfor %}
+									</tbody>
+									<tfoot class="table-light">
+										<tr>
+											<td colspan="4" class="text-end fw-bold">{{ "ictectechOrderList.detail.grandTotal"|trans|sw_sanitize }}:</td>
+											<td class="text-end fw-bold" id="grand-total">{{ grandTotal|currency }}</td>
+											<td></td>
 										</tr>
-									{% endfor %}
-								</tbody>
-								<tfoot class="table-light">
-									<tr>
-										<td colspan="3" class="text-end fw-bold">{{ "ictectechOrderList.detail.grandTotal"|trans|sw_sanitize }}:</td>
-										<td class="text-end fw-bold" id="grand-total">{{ grandTotal|currency }}</td>
-										<td></td>
-									</tr>
-								</tfoot>
-							</table>
+									</tfoot>
+								</table>
+							</div>
 						</div>
-					</div>
+					</form>
 
-					<div class="order-list-actions d-flex justify-content-end">
-						<button type="submit" class="btn btn-primary">
-							{{ "ictectechOrderList.detail.addAllToCart"|trans|sw_sanitize }}
-						</button>
-					</div>
+					<form action="{{ path('frontend.checkout.line-item.add') }}" method="post" data-add-to-cart="true">
+						<input type="hidden" name="redirectTo" value="frontend.checkout.cart.page">
+						<input type="hidden" name="orderListId" value="{{ orderList.id }}">
+						{% for item in orderList.extensions.orderListProduct %}
+							<input type="hidden" name="lineItems[{{ item.product.id }}][id]" value="{{ item.product.id }}">
+							<input type="hidden" name="lineItems[{{ item.product.id }}][type]" value="product">
+							<input type="hidden" name="lineItems[{{ item.product.id }}][referencedId]" value="{{ item.product.id }}">
+							<input type="hidden" name="lineItems[{{ item.product.id }}][quantity]" value="{{ item.qty }}" data-quantity-hidden="{{ item.product.id }}">
+						{% endfor %}
+						<div class="order-list-actions d-flex justify-content-end">
+							<button type="submit" class="btn btn-primary">
+								{{ "ictectechOrderList.detail.addAllToCart"|trans|sw_sanitize }}
+							</button>
+						</div>
+					</form>
 				</div>
 
 				{% if products.total > products.limit %}
@@ -210,7 +237,28 @@
 				</div>
 			{% endif %}
 		</div>
-	</form>
-</div>
+	</div>
+
+	<!-- Bulk Delete Modal -->
+	<div class="modal fade" id="bulkDeleteModal" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">{{ "ictectechOrderList.detail.modal.bulkRemoveTitle"|trans({}, 'messages', 'en-GB')|default('Remove Selected Products') }}</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
+				<div class="modal-body">
+					<p>{{ "ictectechOrderList.detail.modal.bulkRemoveMessage"|trans({}, 'messages', 'en-GB')|default('Are you sure you want to remove the selected products?') }}</p>
+					<p class="text-muted">
+						<span data-bulk-count>0</span>
+						product(s) will be removed.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ "ictectechOrderList.detail.modal.cancel"|trans|sw_sanitize }}</button>
+					<button type="button" class="btn btn-danger" onclick="document.querySelector('[data-bulk-delete-form]').submit()">{{ "ictectechOrderList.detail.modal.remove"|trans|sw_sanitize }}</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 {% endblock %}

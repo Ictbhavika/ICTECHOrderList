@@ -11,23 +11,25 @@ export default class OrderListQuantityPlugin extends Plugin {
     }
 
     _registerEvents() {
-        const quantitySelectors = DomAccess.querySelectorAll(this.el, '[data-order-list-qty]', false);
+        const quantitySelectors = this.el.querySelectorAll('[data-order-list-qty]');
 
-        quantitySelectors.forEach(selector => {
-            const minusBtn = selector.querySelector('.btn-minus');
-            const plusBtn = selector.querySelector('.btn-plus');
-            const input = selector.querySelector('.quantity-selector-group-input');
+        if (quantitySelectors) {
+            Array.from(quantitySelectors).forEach(selector => {
+                const minusBtn = selector.querySelector('.btn-minus');
+                const plusBtn = selector.querySelector('.btn-plus');
+                const input = selector.querySelector('.quantity-selector-group-input');
 
-            if (minusBtn) {
-                minusBtn.addEventListener('click', this._onMinusClick.bind(this));
-            }
-            if (plusBtn) {
-                plusBtn.addEventListener('click', this._onPlusClick.bind(this));
-            }
-            if (input) {
-                input.addEventListener('change', this._onInputChange.bind(this));
-            }
-        });
+                if (minusBtn) {
+                    minusBtn.addEventListener('click', this._onMinusClick.bind(this));
+                }
+                if (plusBtn) {
+                    plusBtn.addEventListener('click', this._onPlusClick.bind(this));
+                }
+                if (input) {
+                    input.addEventListener('change', this._onInputChange.bind(this));
+                }
+            });
+        }
     }
 
     _onMinusClick(event) {

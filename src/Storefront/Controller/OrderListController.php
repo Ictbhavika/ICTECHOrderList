@@ -367,6 +367,29 @@ class OrderListController extends StorefrontController
         return $this->redirectToRoute('frontend.account.order-list.page');
     }
 
+    #[Route(path: '/order-list/product/bulk-delete', name: 'frontend.order-list.product.bulk-delete', defaults: ['_loginRequired' => true, '_noStore' => true], methods: ['POST'])]
+    public function bulkDeleteProducts(Request $request, SalesChannelContext $context): Response
+    {
+        $itemIds = $request->request->all('itemIds');
+        $orderListId = $request->request->get('orderListId');
+
+        if (empty($itemIds) || !is_array($itemIds)) {
+            $this->addFlash(self::DANGER, 'No products selected');
+            return $this->redirectToRoute('frontend.order-list.detail', ['id' => $orderListId]);
+        }
+
+        try {
+            $deleteData = array_map(fn($id) => ['id' => $id], $itemIds);
+            $this->orderProductListRepository->delete($deleteData, $context->getContext());
+            $count = count($itemIds);
+            $this->addFlash(self::SUCCESS, "{$count} product(s) removed from list");
+        } catch (\Exception $e) {
+            $this->addFlash(self::DANGER, 'Failed to remove products');
+        }
+
+        return $this->redirectToRoute('frontend.order-list.detail', ['id' => $orderListId]);
+    }
+
     #[Route(path: '/order-list/{id}/products', name: 'frontend.order-list.products', defaults: ['_loginRequired' => true, 'XmlHttpRequest' => true, '_noStore' => true], methods: ['GET'])] 
     public function getProducts(string $id, SalesChannelContext $context): Response
     {
@@ -426,6 +449,8 @@ class OrderListController extends StorefrontController
             $productIds = array_map(static fn ($item) => $item->get('productId'), $paginatedProducts);
             $productCriteria = new Criteria($productIds);
             $productCriteria->addAssociation('cover.media');
+            $productCriteria->addAssociation('options');
+            $productCriteria->addAssociation('options.group');
             $loadedProducts = $this->productRepository->search($productCriteria, $context);
 
             foreach ($paginatedProducts as $item) {
@@ -435,7 +460,6 @@ class OrderListController extends StorefrontController
                 }
             }
         }
-
         $collection = new EntityCollection($paginatedProducts);
         $criteria = new Criteria();
         $criteria->setLimit($limit);
