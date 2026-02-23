@@ -366,7 +366,7 @@ class OrderListController extends StorefrontController
         return $this->redirectToRoute('frontend.account.order-list.page');
     }
 
-    #[Route(path: '/order-list/{id}/products', name: 'frontend.order-list.products', defaults: ['_loginRequired' => true, 'XmlHttpRequest' => true, '_noStore' => true], methods: ['GET'])]
+    #[Route(path: '/order-list/{id}/products', name: 'frontend.order-list.products', defaults: ['_loginRequired' => true, 'XmlHttpRequest' => true, '_noStore' => true], methods: ['GET'])] 
     public function getProducts(string $id, SalesChannelContext $context): Response
     {
         $criteria = new Criteria([$id]);
@@ -549,7 +549,6 @@ class OrderListController extends StorefrontController
                 'referencedId' => $item->get('productId'),
             ];
         }
-        dd($items);
 
         return $this->json(['success' => true, 'items' => $items]);
     }

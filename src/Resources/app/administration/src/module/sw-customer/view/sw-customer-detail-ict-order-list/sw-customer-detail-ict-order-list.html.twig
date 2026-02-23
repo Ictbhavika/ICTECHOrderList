@@ -1,6 +1,6 @@
 <div class="order-list-container">
 
-	<mt-empty-state v-if="!orderLists || orderLists.length === 0" icon="regular-list-xs" headline="No order lists found"/>
+	<mt-empty-state v-if="!orderLists || orderLists.length === 0" icon="regular-list-xs" headline="No order lists found"/> 
 
 	<mt-card
 		v-else v-for="orderList in orderLists" :key="orderList.id" class="order-list-card">
