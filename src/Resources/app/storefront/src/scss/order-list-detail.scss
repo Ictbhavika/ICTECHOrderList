@@ -1,4 +1,14 @@
 .order-list-detail {
+    .order-list-back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        
+        .icon {
+            display: inline-flex;
+        }
+    }
+    
     .line-item-row {
         align-items: center;
         

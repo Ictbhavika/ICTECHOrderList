@@ -9,11 +9,10 @@
 {% block page_account_main_content %}
 <div class="order-list-detail">
 	<div class="order-list-header account-welcome mb-4">
-		<a href="{{ path('frontend.account.order-list.page') }}" class="btn btn-sm btn-outline-secondary mb-2">
-			{% sw_icon 'arrow-head-left' style {size: 'xs'} %}
-			{{ "ictectechOrderList.detail.backToLists"|trans|sw_sanitize }}
+		<a href="{{ path('frontend.account.order-list.page') }}" class="btn btn-sm btn-outline-secondary mb-2" >
+			<span style="display: inline-flex;">{% sw_icon 'arrow-head-left' style {size: 'xs'} %}</span>
+			<span>{{ "ictectechOrderList.detail.backToLists"|trans|sw_sanitize }}</span>
 		</a>
-		{{ dump(orderList)}}
 		<h1>{{ orderList.name ?? orderList.translated.name }}</h1>
 	</div>
 
@@ -58,20 +57,20 @@
 				{% set grandTotal = 0 %}
 				<div class="card-body">
 					<div class="order-list-products-table mb-3">
-					<div class="table-responsive">
-					<table class="table table-hover mb-0">
-						<thead class="table-light">
-							<tr>
-								<th>{{ "ictectechOrderList.detail.columnProduct"|trans|sw_sanitize }}</th>
-								<th class="text-center">{{ "checkout.cartHeaderQuantity"|trans|sw_sanitize }}</th>
-								<th class="text-end">{{ "checkout.cartHeaderUnitPrice"|trans|sw_sanitize }}</th>
-								<th class="text-end">{{ "checkout.cartHeaderTotalPrice"|trans|sw_sanitize }}</th>
-								<th class="text-end">{{ "ictectechOrderList.detail.columnActions"|trans|sw_sanitize }}</th>
-							</tr>
-						</thead>
-						<tbody>
-							{% for item in orderList.extensions.orderListProduct %}
-								<tr data-item-id="{{ item.id }}" data-search-item>
+						<div class="table-responsive">
+							<table class="table table-hover mb-0">
+								<thead class="table-light">
+									<tr>
+										<th>{{ "ictectechOrderList.detail.columnProduct"|trans|sw_sanitize }}</th>
+										<th class="text-center">{{ "checkout.cartHeaderQuantity"|trans|sw_sanitize }}</th>
+										<th class="text-end">{{ "checkout.cartHeaderUnitPrice"|trans|sw_sanitize }}</th>
+										<th class="text-end">{{ "checkout.cartHeaderTotalPrice"|trans|sw_sanitize }}</th>
+										<th class="text-end">{{ "ictectechOrderList.detail.columnActions"|trans|sw_sanitize }}</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for item in orderList.extensions.orderListProduct %}
+										<tr data-item-id="{{ item.id }}" data-search-item>
 									<td data-label="{{ 'ictectechOrderList.detail.columnProduct'|trans|sw_sanitize }}">
 										<input type="hidden" name="lineItems[{{ item.product.id }}][id]" value="{{ item.product.id }}">
 										<input type="hidden" name="lineItems[{{ item.product.id }}][type]" value="product">
@@ -165,18 +164,18 @@
 											</div>
 										</div>
 									</td>
-								</tr>
-							{% endfor %}
-						</tbody>
-						<tfoot class="table-light">
-							<tr>
-								<td colspan="3" class="text-end fw-bold">{{ "ictectechOrderList.detail.grandTotal"|trans|sw_sanitize }}:</td>
-								<td class="text-end fw-bold" id="grand-total">{{ grandTotal|currency }}</td>
-								<td></td>
-							</tr>
-						</tfoot>
-					</table>
-					</div>
+										</tr>
+									{% endfor %}
+								</tbody>
+								<tfoot class="table-light">
+									<tr>
+										<td colspan="3" class="text-end fw-bold">{{ "ictectechOrderList.detail.grandTotal"|trans|sw_sanitize }}:</td>
+										<td class="text-end fw-bold" id="grand-total">{{ grandTotal|currency }}</td>
+										<td></td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
 					</div>
 
 					<div class="order-list-actions d-flex justify-content-end">
