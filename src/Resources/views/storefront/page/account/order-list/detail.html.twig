@@ -168,29 +168,10 @@
 														-
 													{% endif %}
 												</td>
-												<td class="text-end" data-label="{{ 'ictectechOrderList.detail.columnActions'|trans|sw_sanitize }}">
+												<td class="text-end">
 													<button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal{{ item.id }}" title="{{ 'checkout.removeLineItem'|trans|striptags }}">
 														{% sw_icon 'x' style {'size': 'sm'} %}
 													</button>
-													<div class="modal fade" id="deleteModal{{ item.id }}" tabindex="-1">
-														<div class="modal-dialog modal-dialog-centered">
-															<div class="modal-content">
-																<div class="modal-header">
-																	<h5 class="modal-title">{{ "ictectechOrderList.detail.modal.removeTitle"|trans|sw_sanitize }}</h5>
-																	<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-																</div>
-																<div class="modal-body">
-																	{{ "ictectechOrderList.detail.modal.removeMessage"|trans|sw_sanitize }}
-																</div>
-																<div class="modal-footer">
-																	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ "ictectechOrderList.detail.modal.cancel"|trans|sw_sanitize }}</button>
-																	<form method="POST" action="{{ path('frontend.order-list.product.delete', {itemId: item.id}) }}" style="display:inline;">
-																		<button type="submit" class="btn btn-danger">{{ "ictectechOrderList.detail.modal.remove"|trans|sw_sanitize }}</button>
-																	</form>
-																</div>
-															</div>
-														</div>
-													</div>
 												</td>
 											</tr>
 										{% endfor %}
@@ -238,6 +219,31 @@
 			{% endif %}
 		</div>
 	</div>
+
+	<!-- Single Delete Modals -->
+	{% if orderList.extensions.orderListProduct %}
+		{% for item in orderList.extensions.orderListProduct %}
+			<div class="modal fade" id="deleteModal{{ item.id }}" tabindex="-1">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">{{ "ictectechOrderList.detail.modal.removeTitle"|trans|sw_sanitize }}</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+						</div>
+						<div class="modal-body">
+							{{ "ictectechOrderList.detail.modal.removeMessage"|trans|sw_sanitize }}
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ "ictectechOrderList.detail.modal.cancel"|trans|sw_sanitize }}</button>
+							<form method="POST" action="{{ path('frontend.order-list.product.delete', {itemId: item.id}) }}" style="display:inline;">
+								<button type="submit" class="btn btn-danger">{{ "ictectechOrderList.detail.modal.remove"|trans|sw_sanitize }}</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	{% endif %}
 
 	<!-- Bulk Delete Modal -->
 	<div class="modal fade" id="bulkDeleteModal" tabindex="-1">

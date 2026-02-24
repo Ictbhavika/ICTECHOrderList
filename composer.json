@@ -1,37 +1,40 @@
 {
-    "name": "i-c-t-e-c-h-order-list/i-c-t-e-c-h-order-list",
-    "description": "i-c-t-e-c-h-order-list/i-c-t-e-c-h-order-list",
-    "type": "shopware-platform-plugin",
-    "version": "1.0.0",
-    "license": "MIT",
-    "require": {
-        "shopware/core": "~6.7.0"
-    },
-    "extra": {
-        "shopware-plugin-class": "ICTECHOrderList\\ICTECHOrderList",
-        "label": {
-            "de-DE": "Bestelliste",
-            "en-GB": "Order List"
-        }
-    },
-    "autoload": {
-        "psr-4": {
-            "ICTECHOrderList\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "ICTECHOrderList\\Tests\\": "tests/"
-        }
-    },
-    "require-dev": {
-        "phpstan/phpstan": "^2.1",
-        "nunomaduro/phpinsights": "^2.13"
-    },
-    "config": {
-        "allow-plugins": {
-            "symfony/runtime": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        }
+  "name": "ict/ict-order-list",
+  "description": "Order List Management",
+  "type": "shopware-platform-plugin",
+  "version": "1.0.0",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "iCreative Technologies"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "ICTECHOrderList\\": "src/"
+    }
+  },
+  "require": {
+    "shopware/core": ">=6.7.0",
+    "shopware/storefront": ">=6.7.0"
+  },
+  "extra": {
+    "shopware-plugin-class": "ICTECHOrderList\\ICTECHOrderList",
+    "label": {
+      "de-DE": "Bestellliste",
+      "en-GB": "Order List"
+    },
+    "description": {
+      "de-DE": "Verwalten Sie Bestelllisten mit Produkten und Mengen",
+      "en-GB": "Manage order lists with products and quantities"
+    },
+    "manufacturerLink": {
+      "de-DE": "https://www.icreativetechnologies.com",
+      "en-GB": "https://www.icreativetechnologies.com"
+    },
+    "supportLink": {
+      "de-DE": "https://support.icreativetechnologies.com",
+      "en-GB": "https://support.icreativetechnologies.com"
+    }
+  }
 }
