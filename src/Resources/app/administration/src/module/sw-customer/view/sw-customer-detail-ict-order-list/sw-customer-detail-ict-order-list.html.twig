@@ -1,7 +1,9 @@
 <div class="order-list-container">
 
+	<mt-empty-state v-if="!orderLists || orderLists.length === 0" icon="regular-list-xs" headline="No order lists found"/> 
+
 	<mt-card
-		v-for="orderList in orderLists" :key="orderList.id" class="order-list-card">
+		v-else v-for="orderList in orderLists" :key="orderList.id" class="order-list-card">
 
 		<!-- Header -->
 		<div class="order-list-card-header" @click="toggleAccordion(orderList.id)">
@@ -17,7 +19,7 @@
 				</span>
 			</div>
 
-			<mt-icon name="regular-chevron-down-xs" class="order-chevron" :class="{ 'is-open': isExpanded(orderList.id) }"/>
+			<mt-icon name="regular-chevron-right-xs" class="order-chevron" :class="{ 'is-open': isExpanded(orderList.id) }"/>
 		</div>
 
 		<!-- Body -->

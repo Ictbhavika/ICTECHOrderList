@@ -23,5 +23,4 @@ class CustomerExtension extends EntityExtension
     {
         return CustomerDefinition::ENTITY_NAME;
     }
-
 }

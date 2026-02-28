@@ -1,0 +1,51 @@
+<<<<<<< HEAD
+includes:
+	- phpstan-baseline.neon
+
+parameters:
+	level: 10
+	paths:
+		- src
+	excludePaths:
+		- src/Resources
+	ignoreErrors:
+		- '#has parameter .* with generic class .*Repository but does not specify its types#'
+		- '#^Parameter \#1 \$callback of function array_map expects#'
+		- '#^Cannot call method get\(\) on mixed\.$#'
+		- '#^Cannot access property \$product on mixed\.$#'
+		- '#^Argument of an invalid type .* supplied for foreach#'
+		- '#^Parameter \#1 \$ids of class .* constructor expects array#'
+		- '#^Parameter \#2 \$total of class .* constructor expects int, mixed given#'
+		- '#^Parameter \#1 \$elements of class .* constructor expects iterable#'
+		- '#^Access to an undefined property .*::\$productCount#'
+		- '#^Parameter \#1 \$value of function count expects array\|Countable#'
+		- '#^Call to an undefined method .*::getProductNumber\(\)#'
+		- '#^Call to an undefined method .*::getId\(\)#'
+		- '#^Cannot call method getSize\(\) on mixed#'
+		- '#^Cannot call method getMimeType\(\) on mixed#'
+		- '#^Cannot call method getClientOriginalExtension\(\) on mixed#'
+		- '#^Cannot call method getPathname\(\) on mixed#'
+		- '#^Cannot cast mixed to string#'
+		- '#^Cannot cast mixed to int#'
+		- '#^Parameter \#1 \$filename of function file_get_contents expects string, mixed given#'
+		- '#^Unreachable statement#'
+		- '#^Possibly invalid array key type mixed#'
+		- '#^Cannot access offset .* on mixed#'
+		- '#^Cannot call method .* on mixed#'
+		- '#^Call to an undefined method .*::getElements\(\)#'
+		- '#^Parameter \#1 \$array of function array_slice expects array, mixed given#'
+		- '#^Parameter \#1 \$key of method .*::get\(\) expects .*, mixed given#'
+	bootstrapFiles:
+		- ../../../vendor/autoload.php
+=======
+parameters:
+    level: 9
+    paths:
+        - src
+    excludePaths:
+        - src/Resources
+        - src/Storefront
+    reportUnmatchedIgnoredErrors: false
+includes:
+    - phpstan-baseline.neon
+>>>>>>> fe6ade7 (code standard and design and price issue solve)

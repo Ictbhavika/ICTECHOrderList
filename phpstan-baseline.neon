@@ -1,0 +1,173 @@
+parameters:
+<<<<<<< HEAD
+	ignoreErrors: []
+=======
+	ignoreErrors:
+		-
+			message: '#^Access to an undefined property Shopware\\Core\\Framework\\DataAbstractionLayer\\Entity\:\:\$productCount\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Access to undefined constant ICTECHOrderList\\Storefront\\Controller\\OrderListController\:\:DANGER\.$#'
+			identifier: classConstant.notFound
+			count: 19
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Access to undefined constant ICTECHOrderList\\Storefront\\Controller\\OrderListController\:\:SUCCESS\.$#'
+			identifier: classConstant.notFound
+			count: 7
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Access to undefined constant ICTECHOrderList\\Storefront\\Controller\\OrderListController\:\:WARNING\.$#'
+			identifier: classConstant.notFound
+			count: 1
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Argument of an invalid type Shopware\\Core\\Framework\\Struct\\Struct supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 4
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Call to an undefined method ICTECHOrderList\\Storefront\\Controller\\OrderListController\:\:addFlash\(\)\.$#'
+			identifier: method.notFound
+			count: 27
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Call to an undefined method ICTECHOrderList\\Storefront\\Controller\\OrderListController\:\:createNotFoundException\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Call to an undefined method ICTECHOrderList\\Storefront\\Controller\\OrderListController\:\:json\(\)\.$#'
+			identifier: method.notFound
+			count: 6
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Call to an undefined method ICTECHOrderList\\Storefront\\Controller\\OrderListController\:\:redirectToRoute\(\)\.$#'
+			identifier: method.notFound
+			count: 22
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Call to an undefined method ICTECHOrderList\\Storefront\\Controller\\OrderListController\:\:renderStorefront\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Call to an undefined method Shopware\\Core\\Framework\\DataAbstractionLayer\\Entity\:\:getId\(\)\.$#'
+			identifier: method.notFound
+			count: 3
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Call to an undefined method Shopware\\Core\\Framework\\DataAbstractionLayer\\Entity\:\:getProductNumber\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Call to an undefined method Shopware\\Core\\Framework\\Struct\\Struct\:\:getElements\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Cannot access offset ''itemId'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Cannot access offset ''qty'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Cannot call method getClientOriginalExtension\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Cannot call method getMimeType\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Cannot call method getPathname\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Cannot call method getSize\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 1
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Method ICTECHOrderList\\Storefront\\Controller\\OrderListController\:\:__construct\(\) has parameter \$orderListRepository with generic class Shopware\\Core\\Framework\\DataAbstractionLayer\\EntityRepository but does not specify its types\: TEntityCollection$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Method ICTECHOrderList\\Storefront\\Controller\\OrderListController\:\:__construct\(\) has parameter \$orderProductListRepository with generic class Shopware\\Core\\Framework\\DataAbstractionLayer\\EntityRepository but does not specify its types\: TEntityCollection$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Method ICTECHOrderList\\Storefront\\Controller\\OrderListController\:\:__construct\(\) has parameter \$productRepository with generic class Shopware\\Core\\System\\SalesChannel\\Entity\\SalesChannelRepository but does not specify its types\: TEntityCollection$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(string\|null\)\: mixed\)\|null, ''trim'' given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Parameter \#1 \$ids of class Shopware\\Core\\Framework\\DataAbstractionLayer\\Search\\Criteria constructor expects array\<IDStructure of array\<string, string\>\|string \= string\>\|null, array\<int, bool\|float\|int\|string\|null\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Parameter \#1 \$value of function count expects array\|Countable, Shopware\\Core\\Framework\\Struct\\Struct given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: src/Storefront/Controller/OrderListController.php
+
+		-
+			message: '#^Method ICTECHOrderList\\Subscriber\\OrderPlacedSubscriber\:\:__construct\(\) has parameter \$orderListRepository with generic class Shopware\\Core\\Framework\\DataAbstractionLayer\\EntityRepository but does not specify its types\: TEntityCollection$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Subscriber/OrderPlacedSubscriber.php
+>>>>>>> fe6ade7 (code standard and design and price issue solve)

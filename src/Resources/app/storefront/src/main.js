@@ -5,3 +5,4 @@ window.PluginManager.register('OrderListCsvUpload', () => import('./plugin/order
 window.PluginManager.register('FlashMessage', () => import('./plugin/order-list/flash-message.plugin'), '[data-flash-message]');
 window.PluginManager.register('OrderListModal', () => import('./plugin/order-list/order-list-modal.plugin'), '[data-order-list-modals]');
 window.PluginManager.register('OrderListQuantity', () => import('./plugin/order-list/order-list-quantity.plugin'), '[data-order-list-quantity]');
+window.PluginManager.register('OrderListBulkDelete', () => import('./plugin/order-list/order-list-bulk-delete.plugin'), '[data-order-list-bulk-delete]');

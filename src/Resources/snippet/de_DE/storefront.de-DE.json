@@ -1,5 +1,5 @@
 {
-    "ictectechOrderList": {
+    "ictectechOrderList": { 
         "account": {
             "sidebarLink": "Bestelliste",
             "pageTitle": "Bestelliste",
@@ -12,6 +12,7 @@
             "csvImport": "CSV-Import",
             "csvDownloadDemo": "Demo-CSV herunterladen",
             "searchProductLabel": "Suchen Sie nach Name oder SKU...",
+            "product": "Produkt",
             "products": "Produkte",
             "created": "Erstellt:",
             "updated": "Aktualisiert:",
@@ -52,7 +53,7 @@
             "backToLists": "Zurück zu Listen",
             "searchTitle": "Produkte suchen",
             "searchPlaceholder": "Produkte suchen...",
-            "csvTitle": "CSV-Upload",
+            "csvTitle": "CSV-Import",
             "uploadCsv": "CSV hochladen",
             "addAllToCart": "Alle in den Warenkorb",
             "columnProduct": "Produkt",

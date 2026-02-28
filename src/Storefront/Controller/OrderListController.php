@@ -39,6 +39,7 @@ class OrderListController extends StorefrontController
         $criteria = new Criteria();
         $criteria->addFilter(new EqualsAnyFilter('customerId', [$customerId]));
         $criteria->addAssociation('orderListProduct');
+        $criteria->addAssociation('translations');
         $criteria->setLimit($limit);
         $criteria->setOffset(($page - 1) * $limit);
         $criteria->setTotalCountMode(Criteria::TOTAL_COUNT_MODE_EXACT);
@@ -75,7 +76,7 @@ class OrderListController extends StorefrontController
     {
         $orderListName = trim((string) $request->request->get('orderListName', ''));
         $csvFile = $request->files->get('csvFile');
-
+        dd($orderListName);
         if ($orderListName === '') {
             $this->addFlash(self::DANGER, 'Order list name is required');
             return $this->redirectToRoute('frontend.account.order-list.page');
@@ -207,9 +208,7 @@ class OrderListController extends StorefrontController
             } else {
                 $this->addFlash(self::SUCCESS, "Order list '{$orderListName}' created successfully.");
             }
-
             return $this->redirectToRoute('frontend.order-list.detail', ['id' => $orderListId]);
-
         } catch (\Exception $e) {
             $this->addFlash(self::DANGER, 'Error creating order list: ' . $e->getMessage());
             return $this->redirectToRoute('frontend.account.order-list.page');
@@ -368,7 +367,30 @@ class OrderListController extends StorefrontController
         return $this->redirectToRoute('frontend.account.order-list.page');
     }
 
-    #[Route(path: '/order-list/{id}/products', name: 'frontend.order-list.products', defaults: ['_loginRequired' => true, 'XmlHttpRequest' => true, '_noStore' => true], methods: ['GET'])]
+    #[Route(path: '/order-list/product/bulk-delete', name: 'frontend.order-list.product.bulk-delete', defaults: ['_loginRequired' => true, '_noStore' => true], methods: ['POST'])]
+    public function bulkDeleteProducts(Request $request, SalesChannelContext $context): Response
+    {
+        $itemIds = $request->request->all('itemIds');
+        $orderListId = $request->request->get('orderListId');
+
+        if (empty($itemIds) || !is_array($itemIds)) {
+            $this->addFlash(self::DANGER, 'No products selected');
+            return $this->redirectToRoute('frontend.order-list.detail', ['id' => $orderListId]);
+        }
+
+        try {
+            $deleteData = array_map(fn($id) => ['id' => $id], $itemIds);
+            $this->orderProductListRepository->delete($deleteData, $context->getContext());
+            $count = count($itemIds);
+            $this->addFlash(self::SUCCESS, "{$count} product(s) removed from list");
+        } catch (\Exception $e) {
+            $this->addFlash(self::DANGER, 'Failed to remove products');
+        }
+
+        return $this->redirectToRoute('frontend.order-list.detail', ['id' => $orderListId]);
+    }
+
+    #[Route(path: '/order-list/{id}/products', name: 'frontend.order-list.products', defaults: ['_loginRequired' => true, 'XmlHttpRequest' => true, '_noStore' => true], methods: ['GET'])] 
     public function getProducts(string $id, SalesChannelContext $context): Response
     {
         $criteria = new Criteria([$id]);
@@ -411,6 +433,7 @@ class OrderListController extends StorefrontController
 
         $criteria = new Criteria([$id]);
         $criteria->addAssociation('orderListProduct');
+        $criteria->addAssociation('translations');
         $orderList = $this->orderListRepository->search($criteria, $context->getContext())->first();
 
         if (!$orderList) {
@@ -426,6 +449,8 @@ class OrderListController extends StorefrontController
             $productIds = array_map(static fn ($item) => $item->get('productId'), $paginatedProducts);
             $productCriteria = new Criteria($productIds);
             $productCriteria->addAssociation('cover.media');
+            $productCriteria->addAssociation('options');
+            $productCriteria->addAssociation('options.group');
             $loadedProducts = $this->productRepository->search($productCriteria, $context);
 
             foreach ($paginatedProducts as $item) {
@@ -435,7 +460,6 @@ class OrderListController extends StorefrontController
                 }
             }
         }
-
         $collection = new EntityCollection($paginatedProducts);
         $criteria = new Criteria();
         $criteria->setLimit($limit);
@@ -464,17 +488,19 @@ class OrderListController extends StorefrontController
     {
         $listId = $request->request->get('listId');
         $name = trim((string) $request->request->get('name'));
-
         if ($name === '') {
             $this->addFlash(self::DANGER, 'Name is required');
             return $this->redirectToRoute('frontend.account.order-list.page');
         }
 
         try {
-            $this->orderListRepository->update([['id' => $listId, 'name' => $name]], $context->getContext());
+            $sk = $this->orderListRepository->update([[
+                'id' => $listId,
+                'name' => $name
+            ]], $context->getContext());
             $this->addFlash(self::SUCCESS, 'List renamed successfully');
         } catch (\Exception $e) {
-            $this->addFlash(self::DANGER, 'Failed to rename list');
+            $this->addFlash(self::DANGER, 'Failed to rename list: ' . $e->getMessage());
         }
 
         return $this->redirectToRoute('frontend.account.order-list.page');
@@ -535,7 +561,6 @@ class OrderListController extends StorefrontController
     #[Route(path: '/order-list/{id}/add-all-to-cart', name: 'frontend.order-list.add-all-to-cart', defaults: ['_loginRequired' => true, 'XmlHttpRequest' => true, '_noStore' => true], methods: ['POST'])]
     public function addAllToCart(string $id, SalesChannelContext $context): Response
     {
-
         $criteria = new Criteria([$id]);
         $criteria->addAssociation('orderListProduct');
         $orderList = $this->orderListRepository->search($criteria, $context->getContext())->first();
@@ -552,7 +577,6 @@ class OrderListController extends StorefrontController
                 'referencedId' => $item->get('productId'),
             ];
         }
-        dd($items);
 
         return $this->json(['success' => true, 'items' => $items]);
     }

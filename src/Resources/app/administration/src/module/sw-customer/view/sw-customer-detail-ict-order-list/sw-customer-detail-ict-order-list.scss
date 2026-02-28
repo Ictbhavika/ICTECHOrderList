@@ -35,13 +35,14 @@
     padding: 4px 10px;
     border-radius: 12px;
     font-size: 12px;
+    font-weight: 700;
   }
 
   .order-chevron {
     transition: transform 0.2s;
 
     &.is-open {
-      transform: rotate(180deg);
+      transform: rotate(90deg);
     }
   }
 
